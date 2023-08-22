@@ -123,40 +123,40 @@ $this->title = 'tuxedo';
                     <div class="card-text">
                         <div class="row">
                             <div class="col-6">
-                                <?= Yii::t('app','Salary') ?>: <?= $employee['salary']?>
+                                <?= Yii::t('app','Salary') ?>: (<?= $employee['salary']?>)
                             </div>
                             <div class="col-6">
-                                <?= Yii::t('app','Debt') ?>: <?= $employee['amount_debt']?>
+                                <?= Yii::t('app','Debt') ?>: (<?= round($employee['amount_debt'],2)?>)
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <?= Yii::t('app','Commissions') ?>: <?= $employee['amount_commission']?>
+                                <?= Yii::t('app','Commissions') ?>: (<?= round($employee['amount_commission'],2)?>)
                             </div>
                             <div class="col-6">
-                                <?= Yii::t('app','Draws') ?>: <?= $employee['amount_draws']?>
+                                <?= Yii::t('app','Draws') ?>:  (<?= round($employee['amount_draws'],2)?>)
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-6">
-                                <?= Yii::t('app','Tigers') ?>: <?= $employee['amount_tiger']?>
+                                <?= Yii::t('app','Tigers') ?>: (<?= round($employee['amount_tiger'],2)?>)
                             </div>
                             <div class="col-6">
-                                <?= Yii::t('app','Sales') ?>: <?= $employee['amount_sales_employees']?>
+                                <?= Yii::t('app','Sales') ?>: (<?= round($employee['amount_sales_employees'],2)?>)
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-12">
-                                <?= Yii::t('app','Available debt') ?>: <?= $employee['available_debt']?>
+                            <div class="col-6">
+                                <?= Yii::t('app','Discounts') ?>: (<?= round($employee['amount_discount'],2)?>)
                             </div>
-                        </div>
-
                         
+                            <div class="col-6">
+                                <?= Yii::t('app','Available debt') ?>: (<?= round($employee['available_debt'],2)?>)
+                            </div>
+                        </div>
                     </div>
-
-  
                 </div>
             </div>
         </div>

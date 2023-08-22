@@ -298,6 +298,8 @@ return [
     "Available debt"=>"السحوبات المتاحة",
     "Total Sales"=>"مجموع مبيعات",
     "Total Expenses"=>"مجموع المصاريف",
+   "Discounts"=>"الخصومات",
+   "Create Discounts"=>"انشاء خصومات"
 
 
 

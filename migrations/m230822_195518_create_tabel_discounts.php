@@ -3,19 +3,10 @@
 use yii\db\Migration;
 
 /**
- * Class m230816_080209_create_types_of_expenses
+ * Class m230822_195518_create_tabel_discounts
  */
-class m230816_080209_create_types_of_expenses extends Migration
+class m230822_195518_create_tabel_discounts extends Migration
 {
-
-
-    public $data=[
-      ['name' => 'النمر'],
-      ['name' => 'العمولة'],
-      ['name' => 'سلفة'],
-      ['name' => 'سحوبات من الالبسة'],
-      ['name' => 'نثريات']
-    ];
     /**
      * {@inheritdoc}
      */
@@ -28,19 +19,16 @@ class m230816_080209_create_types_of_expenses extends Migration
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
-        $this->createTable('{{%types_of_expenses}}', [
+
+        $this->createTable('{{%discounts}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->string()->notNull(),
+            'amount'=>$this->double()->notNull()->defaultValue(0),
+            'employee_id'=>$this->integer()->notNull(),
+            'note' => $this->text()->null(),
+            'date' => $this->dateTime()->notNull()->defaultValue(null),
             'created_at' => $this->dateTime()->notNull()->defaultValue(null),
             'updated_at' => $this->dateTime()->notNull()->defaultValue(null),
         ], $tableOptions);
-
-        Yii::$app->db
-        ->createCommand()
-        ->batchInsert('types_of_expenses', ['name'], $this->data)
-        ->execute();
-
-
 
     }
 
@@ -49,7 +37,7 @@ class m230816_080209_create_types_of_expenses extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('types_of_expenses');
+        $this->dropTable('discounts');
     }
 
     /*
@@ -61,7 +49,7 @@ class m230816_080209_create_types_of_expenses extends Migration
 
     public function down()
     {
-        echo "m230816_080209_create_types_of_expenses cannot be reverted.\n";
+        echo "m230822_195518_create_tabel_discounts cannot be reverted.\n";
 
         return false;
     }

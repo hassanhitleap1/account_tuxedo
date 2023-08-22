@@ -7,6 +7,8 @@ use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+$employees=ArrayHelper::map(Employees::find()->all(), 'id', 'name');
+
 $today=Carbon::now("Asia/Amman");
 if($model->isNewRecord){
     if($today->hour < 3){
@@ -18,19 +20,17 @@ if($model->isNewRecord){
     $date= $model->date;  
 }
 
-$employees=ArrayHelper::map(Employees::find()->all(), 'id', 'name');
-
 /** @var yii\web\View $this */
-/** @var app\models\Tiger $model */
+/** @var app\models\Discounts $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="tiger-form">
+<div class="discounts-form">
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class="col-6">
-        <?= $form->field($model, 'amount')->textInput() ?>
+            <?= $form->field($model, 'amount')->textInput() ?>
         </div>
         <div class="col-6">
         <?= $form->field($model, 'employee_id')->widget(Select2::classname(), [
@@ -44,6 +44,7 @@ $employees=ArrayHelper::map(Employees::find()->all(), 'id', 'name');
         </div>
     </div>
 
+
     <div class="row">
         <div class="col-6">
         <?=  $form->field($model, 'date')->widget(DatePicker::classname(), [
@@ -56,16 +57,9 @@ $employees=ArrayHelper::map(Employees::find()->all(), 'id', 'name');
         </div>
         <div class="col-6">
         <?= $form->field($model, 'note')->textInput(['maxlength' => true]) ?>
+
         </div>
     </div>
-
- 
-
-
-
-    
-
-  
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

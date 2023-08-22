@@ -3,44 +3,32 @@
 use yii\db\Migration;
 
 /**
- * Class m230816_080209_create_types_of_expenses
+ * Class m230822_195621_create_table_working_hours
  */
-class m230816_080209_create_types_of_expenses extends Migration
+class m230822_195621_create_table_working_hours extends Migration
 {
-
-
-    public $data=[
-      ['name' => 'النمر'],
-      ['name' => 'العمولة'],
-      ['name' => 'سلفة'],
-      ['name' => 'سحوبات من الالبسة'],
-      ['name' => 'نثريات']
-    ];
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
 
-
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
-        $this->createTable('{{%types_of_expenses}}', [
+
+        $this->createTable('{{%working_hours}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->string()->notNull(),
+            'employee_id'=>$this->integer()->notNull(),
+            'start_time'=>$this->time()->null(),
+            'end_time'=>$this->time()->null(),
+            'note' => $this->text()->null(),
+            'date' => $this->date()->notNull()->defaultValue(null),
             'created_at' => $this->dateTime()->notNull()->defaultValue(null),
             'updated_at' => $this->dateTime()->notNull()->defaultValue(null),
         ], $tableOptions);
-
-        Yii::$app->db
-        ->createCommand()
-        ->batchInsert('types_of_expenses', ['name'], $this->data)
-        ->execute();
-
-
 
     }
 
@@ -49,7 +37,7 @@ class m230816_080209_create_types_of_expenses extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('types_of_expenses');
+        $this->dropTable('working_hours');
     }
 
     /*
@@ -61,7 +49,7 @@ class m230816_080209_create_types_of_expenses extends Migration
 
     public function down()
     {
-        echo "m230816_080209_create_types_of_expenses cannot be reverted.\n";
+        echo "m230822_195621_create_table_working_hours cannot be reverted.\n";
 
         return false;
     }

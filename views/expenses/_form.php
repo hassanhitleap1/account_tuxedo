@@ -1,13 +1,23 @@
 <?php
 
-use app\models\TypesOfExpenses;
+use Carbon\Carbon;
 use yii\helpers\Html;
 use app\models\Employees;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-
+use app\models\TypesOfExpenses;
+$today=Carbon::now("Asia/Amman");
+if($model->isNewRecord){
+    if($today->hour < 3){
+        $date= $today->subDay()->toDateString(); 
+    }else{
+        $date= $today->toDateString();  
+    }
+}else{
+    $date= $model->date;  
+}
 
 $employees=ArrayHelper::map(Employees::find()->all(), 'id', 'name');
 $types=ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
@@ -55,7 +65,7 @@ $types=ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
     <div class="row">
         <div class="col-6">
         <?=  $form->field($model, 'date')->widget(DatePicker::classname(), [
-            'options' => ['placeholder' => 'Enter birth date ...'],
+           'options' => ['placeholder' => 'Enter  date ...', 'value'=> $date],
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'yyyy-mm-dd'

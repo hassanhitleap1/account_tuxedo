@@ -6,6 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'language' => 'ar',
+    'name'=>"tuxedo",
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
