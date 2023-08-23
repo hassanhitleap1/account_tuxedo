@@ -111,6 +111,15 @@ class SiteController extends Controller
         ]);
     }
 
+
+
+    public function actionEmployeeDetails($id){
+        $model= Employees::findOne($id);
+      
+        return $this->render('employee-details', [
+            'model' => $model,
+        ]);
+    }
     /**
      * Logout action.
      *
