@@ -23,6 +23,7 @@ class m230816_005408_create_employees_tables extends Migration
             'name' => $this->string()->notNull(),
             'salary'=>$this->double()->notNull(),
             'commission'=>$this->double()->notNull()->defaultValue(0),
+            'start_date'=>$this->date()->null(),
             'created_at' => $this->dateTime()->notNull()->defaultValue(null),
             'updated_at' => $this->dateTime()->notNull()->defaultValue(null),
         ], $tableOptions);

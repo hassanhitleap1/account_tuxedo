@@ -303,7 +303,8 @@ return [
    "Working Hours"=>"اوقات الدوام",
    "Create Working Hours"=>"انشاء وقت دوام",
    "Start Time"=>"وقت الدخول ",
-   "End Time"=>"وقت الخروج"
+   "End Time"=>"وقت الخروج",
+   "Start Date"=>"تاريخ البداية"
 
 
 

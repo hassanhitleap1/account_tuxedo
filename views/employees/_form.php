@@ -1,7 +1,8 @@
 <?php
 
-use app\models\Employees;
 use yii\helpers\Html;
+use app\models\Employees;
+use kartik\date\DatePicker;
 use yii\widgets\ActiveForm;
 
 
@@ -23,9 +24,22 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
  
+    <div class="row">
+        <div class="col-6">
+            <?= $form->field($model, 'commission')->textInput() ?>
+        </div>
+        <div class="col-6">
+        <?=  $form->field($model, 'start_date')->widget(DatePicker::classname(), [
+           'options' => ['placeholder' => 'Enter  date ...'],
+            'pluginOptions' => [
+                'autoclose' => true,
+                'format' => 'yyyy-mm-dd'
+            ]
+            ]);?>
+        </div>
+    </div>
 
 
-    <?= $form->field($model, 'commission')->textInput() ?>
 
 
 

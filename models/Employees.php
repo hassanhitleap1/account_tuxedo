@@ -33,7 +33,7 @@ class Employees extends \yii\db\ActiveRecord
         return [
             [['name', 'salary'], 'required'],
             [['salary', 'commission'], 'number'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at','start_date'], 'safe'],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -47,6 +47,7 @@ class Employees extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
             'salary' => Yii::t('app', 'Salary'),
+            'start_date' => Yii::t('app', 'Start Date'),
             'commission' => Yii::t('app', 'Commission'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),

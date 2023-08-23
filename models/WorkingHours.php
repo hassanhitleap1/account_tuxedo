@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use Carbon\Carbon;
 
 /**
  * This is the model class for table "{{%working_hours}}".
@@ -63,5 +64,27 @@ class WorkingHours extends \yii\db\ActiveRecord
     public static function find()
     {
         return new WorkingHoursQuery(get_called_class());
+    }
+
+
+    public function getEmployee(){
+        return $this->hasOne(Employees::className(), ['id'=>'employee_id']);
+    }
+    public function beforeSave($insert)
+    {
+        $today=Carbon::now("Asia/Amman");
+        if (parent::beforeSave($insert)) {
+            // Place your custom code here
+            if ($this->isNewRecord) {
+                $this->created_at = $today;
+                $this->updated_at = $today;
+            } else {
+                $this->updated_at =$today;
+            }
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }
