@@ -36,10 +36,10 @@ class SalesEmployees extends \yii\db\ActiveRecord
     {
         return [
             [['amount','tiger'], 'number'],
-            [['employee_id'], 'required'],
+            [['employee_id','payment_method'], 'required'],
             [['employee_id'], 'integer'],
             [['date', 'created_at', 'updated_at'], 'safe'],
-            [['note'], 'string', 'max' => 255],
+            [['note','payment_method'], 'string', 'max' => 255],
         ];
     }
 
@@ -53,6 +53,7 @@ class SalesEmployees extends \yii\db\ActiveRecord
             'amount' => Yii::t('app', 'Amount'),
             'employee_id' => Yii::t('app', 'Employee ID'),
             'note' => Yii::t('app', 'Note'),
+            'payment_method'=>Yii::t('app', 'Payment Method'),
             'date' => Yii::t('app', 'Date'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),

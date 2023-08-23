@@ -105,8 +105,8 @@ class Calculator extends BaseObject
     
         $dateTime = Carbon::parse($model->date);
 
-        $sales = Sales::find()->andWhere('date(date) = :date', [':date' => $dateTime->toDateString()])->one();
-        
+        $sales = Sales::find()->andWhere('date(date) = :date', [':date' => $dateTime->toDateString()])->andWhere(['payment_method'=>$model->payment_method])->one();
+       
         if(is_null($sales )){
             $sales= new Sales();
             $sales->amount  =  (float)   $model->amount ;
