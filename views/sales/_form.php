@@ -23,9 +23,10 @@ use yii\widgets\ActiveForm;
     </div>
     
 
-  
 
-    <?=  $form->field($model, 'date')->widget(DatePicker::classname(), [
+    <div class="row">
+        <div class="col-6">
+        <?=  $form->field($model, 'date')->widget(DatePicker::classname(), [
             'options' => ['placeholder' => 'Enter birth date ...'],
             'pluginOptions' => [
                 'autoclose' => true,
@@ -33,6 +34,15 @@ use yii\widgets\ActiveForm;
             ]
             ]);?>
 
+        </div>
+        <div class="col-6">
+        <?= $form->field($model, 'payment_method')->dropDownList(['cash' => 'cash', 'visa' => 'visa']) ?>
+
+        </div>
+    </div>
+  
+
+   
 
 
     <div class="form-group">

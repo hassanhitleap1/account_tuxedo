@@ -12,6 +12,7 @@ use Carbon\Carbon;
  * @property float $amount
  * @property string|null $note
  * @property string|null $date
+ *  @property string|null $payment_method
  * @property string|null $created_at
  * @property string|null $updated_at
  */
@@ -31,9 +32,11 @@ class Sales extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+
+            [['payment_method','amount','date'], 'required'],
             [['amount'], 'number'],
             [['date', 'created_at', 'updated_at'], 'safe'],
-            [['note'], 'string', 'max' => 255],
+            [['note','payment_method'], 'string', 'max' => 255],
         ];
     }
 
@@ -47,6 +50,7 @@ class Sales extends \yii\db\ActiveRecord
             'amount' => Yii::t('app', 'Amount'),
             'note' => Yii::t('app', 'Note'),
             'date' => Yii::t('app', 'Date'),
+            'payment_method'=> Yii::t('app', 'Payment Method'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];

@@ -71,7 +71,13 @@ class SiteController extends Controller
         $month= Yii::$app->getRequest()->getQueryParam('month', $now->month);
         $day = $now->day;
 
-        $sales_amount_monthly=Sales::find()->where(['month('.Sales::tableName().'.date)'=>$month])->sum('amount'); 
+        $sales_amount_monthly=Sales::find()->where(['month('.Sales::tableName().'.date)'=>$month])->sum('amount');
+        
+        $sales_amount_monthly_visa=Sales::find()->where(['month('.Sales::tableName().'.date)'=>$month,
+             'payment_method'=>'visa' ])->sum('amount'); 
+        $sales_amount_monthly_cash=Sales::find()->where(['month('.Sales::tableName().'.date)'=>$month,
+             'payment_method'=>'cash' ])->sum('amount'); 
+        
         $expenses_amount_monthly=Expenses::find()->where(['month('.Expenses::tableName().'.date)'=>$month])->sum('amount'); 
         $employees= Employees::find()->select([Employees::tableName().".*",
         "(select IfNUll(sum(debt.amount),0) from debt where debt.employee_id = ".Employees::tableName().".id  and month(debt.date)= $month and year(debt.date)=$year )  as amount_debt",
@@ -86,7 +92,7 @@ class SiteController extends Controller
         $employees[$key]['available_debt']= ((float) $employee['salary'] / 30) *  $day - (  (float)$employee['amount_debt']  + (float) $employee['amount_draws'] + $employee['amount_discount'])   ;
        }
     
-        return $this->render('index',['employees'=>$employees,'sales_amount_monthly'=>$sales_amount_monthly,'month'=>$month ,'expenses_amount_monthly'=>$expenses_amount_monthly]);
+        return $this->render('index',['employees'=>$employees,'sales_amount_monthly'=>$sales_amount_monthly,'month'=>$month ,'expenses_amount_monthly'=>$expenses_amount_monthly,'sales_amount_monthly_visa'=>$sales_amount_monthly_visa,'sales_amount_monthly_cash'=>$sales_amount_monthly_cash]);
     }
 
     /**

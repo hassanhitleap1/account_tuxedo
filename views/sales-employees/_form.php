@@ -57,8 +57,13 @@ if($model->isNewRecord){
             <?= $form->field($model, 'tiger')->textInput() ?>
         </div>
         <div class="col-6">
+        <?= $form->field($model, 'payment_method')->dropDownList(['cash' => 'cash', 'visa' => 'visa']) ?>
+        </div>
+        <div class="col-6">
         <?= $form->field($model, 'note')->textInput(['maxlength' => true]) ?>
         </div>
+
+
     </div>
 
     <div class="form-group">

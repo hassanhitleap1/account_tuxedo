@@ -23,6 +23,7 @@ class m230816_010407_create_sales_employees extends Migration
             'id' => $this->primaryKey(),
             'amount'=>$this->double()->notNull()->defaultValue(0),
             'employee_id'=>$this->integer()->notNull(),
+            "payment_method"=>"enum('cash','visa')",
             'note' => $this->text()->null(),
             'date' => $this->dateTime()->notNull()->defaultValue(null),
             'created_at' => $this->dateTime()->notNull()->defaultValue(null),

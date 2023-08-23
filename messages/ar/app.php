@@ -277,7 +277,7 @@ return [
     "Salary"=>" الراتب",
     "Commission"=>"العمولة",
     "Created At"=>"تاريخ الانشاء",
-    "Amount"=>"كمية",
+    "Amount"=>"القيمة",
     "Commissions"=>"العمولات",
     "Create Commission"=>"انشاء عمولة ",
     "Employee ID"=>"الموظف",
@@ -304,7 +304,8 @@ return [
    "Create Working Hours"=>"انشاء وقت دوام",
    "Start Time"=>"وقت الدخول ",
    "End Time"=>"وقت الخروج",
-   "Start Date"=>"تاريخ البداية"
+   "Start Date"=>"تاريخ البداية",
+   "Round Balance"=>"رصيد مدور",
 
 
 

@@ -22,6 +22,7 @@ class m230816_010340_create_sales extends Migration
         $this->createTable('{{%sales}}', [
             'id' => $this->primaryKey(),
             'amount'=>$this->double()->notNull()->defaultValue(0),
+            "payment_method"=>"enum('cash','visa')",
             'note' => $this->text()->null(),
             'date' => $this->dateTime()->notNull()->defaultValue(null),
             'created_at' => $this->dateTime()->notNull()->defaultValue(null),

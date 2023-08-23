@@ -111,6 +111,7 @@ class Calculator extends BaseObject
             $sales= new Sales();
             $sales->amount  =  (float)   $model->amount ;
             $sales->date = $model->date;
+            $sales->payment_method = $model->payment_method;
         }else{
             $sales->amount =  (float) $sales->amount + (float)  $model->amount ; 
         }

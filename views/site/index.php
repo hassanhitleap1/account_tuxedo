@@ -47,13 +47,16 @@ $this->title = 'tuxedo';
                         <h5 class="card-title mb-0"><?=Yii::t('app','Total Sales')?> (<?=$month?>)</h5>
                     </div>
                     <div class="row align-items-center mb-2 d-flex">
-                        <div class="col-8">
+                        <div class="col-4">
                             <h2 class="d-flex align-items-center mb-0">
                                $ <?= $sales_amount_monthly?>
                             </h2>
                         </div>
                         <div class="col-4 text-right">
-                            <!-- <span>12.5% <i class="fa fa-arrow-up"></i></span> -->
+                            <span> visa <i class="fa fa-arrow-up"> <?=$sales_amount_monthly_visa?></i></span>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span> cash <i class="fa fa-arrow-up"> <?=$sales_amount_monthly_cash?></i></span>
                         </div>
                     </div>
                     <div class="progress mt-1 " data-height="8" style="height: 8px;">

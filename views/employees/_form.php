@@ -11,30 +11,31 @@ use yii\widgets\ActiveForm;
 /** @var app\models\Employees $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-
 <div class="employees-form">
-
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class="col-6">
-        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-6">
-        <?= $form->field($model, 'salary')->textInput() ?>
+            <?= $form->field($model, 'salary')->textInput() ?>
         </div>
     </div>
- 
     <div class="row">
         <div class="col-6">
             <?= $form->field($model, 'commission')->textInput() ?>
         </div>
+        
         <div class="col-6">
-        <?=  $form->field($model, 'start_date')->widget(DatePicker::classname(), [
-           'options' => ['placeholder' => 'Enter  date ...'],
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'yyyy-mm-dd'
-            ]
+            <?= $form->field($model, 'round_balance')->textInput() ?>
+        </div>
+        <div class="col-6">
+            <?=  $form->field($model, 'start_date')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Enter  date ...'],
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
             ]);?>
         </div>
     </div>
