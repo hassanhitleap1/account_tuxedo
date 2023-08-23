@@ -299,7 +299,11 @@ return [
     "Total Sales"=>"مجموع مبيعات",
     "Total Expenses"=>"مجموع المصاريف",
    "Discounts"=>"الخصومات",
-   "Create Discounts"=>"انشاء خصومات"
+   "Create Discounts"=>"انشاء خصومات",
+   "Working Hours"=>"اوقات الدوام",
+   "Create Working Hours"=>"انشاء وقت دوام",
+   "Start Time"=>"وقت الدخول ",
+   "End Time"=>"وقت الخروج"
 
 
 

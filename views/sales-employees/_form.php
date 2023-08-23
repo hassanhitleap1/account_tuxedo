@@ -54,6 +54,9 @@ if($model->isNewRecord){
             ]);?>
         </div>
         <div class="col-6">
+            <?= $form->field($model, 'tiger')->textInput() ?>
+        </div>
+        <div class="col-6">
         <?= $form->field($model, 'note')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
@@ -64,37 +67,8 @@ if($model->isNewRecord){
 
     <?php ActiveForm::end(); ?>
 
-    <button id="addDay" onclick="addDay()">Add Day</button>
-    <button id="subtractDay" onclick="subtractDay()">Subtract Day</button>
-
 </div>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-<script>
-    $(function() {
-        $("#datepicker").datepicker();
-    });
-
-    function addDay() {
-        var selectedDate = $("#datepicker").datepicker("getDate");
-        if (selectedDate !== null) {
-            selectedDate.setDate(selectedDate.getDate() + 1);
-            $("#datepicker").datepicker("setDate", selectedDate);
-        }
-    }
-
-    function subtractDay() {
-        var selectedDate = $("#datepicker").datepicker("getDate");
-        if (selectedDate !== null) {
-            selectedDate.setDate(selectedDate.getDate() - 1);
-            $("#datepicker").datepicker("setDate", selectedDate);
-        }
-    }
-</script>
 
 
-
-</body>

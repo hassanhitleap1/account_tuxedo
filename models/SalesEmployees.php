@@ -19,6 +19,8 @@ use Carbon\Carbon;
  */
 class SalesEmployees extends \yii\db\ActiveRecord
 {
+
+    public $tiger;
     /**
      * {@inheritdoc}
      */
@@ -33,7 +35,7 @@ class SalesEmployees extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['amount'], 'number'],
+            [['amount','tiger'], 'number'],
             [['employee_id'], 'required'],
             [['employee_id'], 'integer'],
             [['date', 'created_at', 'updated_at'], 'safe'],

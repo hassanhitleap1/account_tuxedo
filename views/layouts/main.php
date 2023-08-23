@@ -50,6 +50,8 @@ if (Yii::$app->user->isGuest) {
             ['label' =>  Yii::t('app', 'Commissions'), 'url' => ['/commission/index']],
             ['label' =>  Yii::t('app', 'Tigers'), 'url' => ['/tiger/index']],
             ['label' =>  Yii::t('app', 'Discounts'), 'url' => ['/discounts/index']],
+            ['label' =>  Yii::t('app', 'Working Hours'), 'url' => ['/working-hours/index']],
+            
             
             
       
