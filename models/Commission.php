@@ -83,6 +83,18 @@ class Commission extends \yii\db\ActiveRecord
         return parent::beforeDelete();
     }
 
+
+    public function beforeValidate()
+    {
+        if (parent::beforeValidate()) {
+            // $this->amount=trim($this->amount);
+            // $this->amount= Calculator::faTOen($this->amount);
+            return true;
+        }
+        return false;
+    }
+
+
     public function beforeSave($insert)
     {
         $today=Carbon::now("Asia/Amman");

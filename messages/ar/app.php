@@ -306,6 +306,9 @@ return [
    "End Time"=>"وقت الخروج",
    "Start Date"=>"تاريخ البداية",
    "Round Balance"=>"رصيد مدور",
+   "Work Start Time"=>"وقت الدوام",
+   "Work End Time"=>"وقت انهاء الدوام",
+   "Updated At"=>"تاريخ التعديل"
 
 
 

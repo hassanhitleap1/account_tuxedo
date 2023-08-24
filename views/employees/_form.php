@@ -41,6 +41,33 @@ use yii\widgets\ActiveForm;
     </div>
 
 
+    <div class="row">
+        <div class="col-6">
+        <?=$form->field($model, 'work_start_time')->widget(\janisto\timepicker\TimePicker::className(), [
+            'language' => 'en',
+            'mode' => 'time',
+            'clientOptions'=>[
+                'timeFormat' => 'HH:mm:ss',
+                'showSecond' => true,
+            ]
+        ]);?>
+        </div>
+        <div class="col-6">
+        <?=$form->field($model, 'work_end_time')->widget(\janisto\timepicker\TimePicker::className(), [
+            'language' => 'en',
+            'mode' => 'time',
+            'clientOptions'=>[
+                'timeFormat' => 'HH:mm:ss',
+                'showSecond' => true,
+            ]
+        ]);?>
+        </div>
+    </div>
+
+  
+
+
+
 
 
 

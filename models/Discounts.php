@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use Carbon\Carbon;
+use app\components\Calculator;
 
 /**
  * This is the model class for table "{{%discounts}}".
@@ -40,6 +41,16 @@ class Discounts extends \yii\db\ActiveRecord
         ];
     }
 
+
+    public function beforeValidate()
+    {
+        if (parent::beforeValidate()) {
+            // $this->amount=trim($this->amount);
+            // $this->amount= Calculator::faTOen($this->amount);
+            return true;
+        }
+        return false;
+    }
     /**
      * {@inheritdoc}
      */

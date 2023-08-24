@@ -17,9 +17,11 @@ class EmployeesSearch extends Employees
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['name', 'created_at', 'updated_at'], 'safe'],
+            [['id','round_balance'], 'integer'],
+            [['name', 'created_at', 'updated_at','work_start_time','work_end_time'], 'safe'],
             [['salary', 'commission'], 'number'],
+
+
         ];
     }
 
@@ -61,6 +63,9 @@ class EmployeesSearch extends Employees
         $query->andFilterWhere([
             'id' => $this->id,
             'salary' => $this->salary,
+            'round_balance'=> $this->round_balance,
+            'work_start_time' => $this->work_start_time,
+            'work_end_time' => $this->work_end_time,
             'commission' => $this->commission,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

@@ -25,6 +25,8 @@ class m230816_005408_create_employees_tables extends Migration
             'commission'=>$this->double()->notNull()->defaultValue(0),
             'round_balance'=>$this->double()->notNull()->defaultValue(0),
             'start_date'=>$this->date()->null(),
+            'work_start_time'=>$this->time(),
+            'work_end_time'=>$this->time(),
             'created_at' => $this->dateTime()->notNull()->defaultValue(null),
             'updated_at' => $this->dateTime()->notNull()->defaultValue(null),
         ], $tableOptions);

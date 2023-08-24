@@ -72,6 +72,17 @@ class Expenses extends \yii\db\ActiveRecord
     }
 
 
+
+    public function beforeValidate()
+    {
+        if (parent::beforeValidate()) {
+            // $this->amount=trim($this->amount);
+            // $this->amount= Calculator::faTOen($this->amount);
+            return true;
+        }
+        return false;
+    }
+
     public function beforeDelete()
     {
         return parent::beforeDelete();
