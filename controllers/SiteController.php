@@ -79,7 +79,10 @@ class SiteController extends Controller
         ->where(['date('.Sales::tableName().'.date)'=>$date,
              'payment_method'=>'cash' ])->sum('amount'); 
         $expenses_daily=Expenses::find()->where(['date('.Expenses::tableName().'.date)'=>$date ])->sum('amount');     
-        $salesEmployees=SalesEmployees::find()->where(['date('.SalesEmployees::tableName().'.date)'=>$today])->all();
+        $salesEmployees=SalesEmployees::find()->where(['date('.SalesEmployees::tableName().'.date)'=>$date])->all();
+        
+       
+        
         $expenses=Expenses::find()->where(['date('.Expenses::tableName().'.date)'=>$today])->all();
         return $this->render('index',[
                     'sales_amount_daily'=>$sales_amount_daily,

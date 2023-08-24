@@ -308,7 +308,10 @@ return [
    "Round Balance"=>"رصيد مدور",
    "Work Start Time"=>"وقت الدوام",
    "Work End Time"=>"وقت انهاء الدوام",
-   "Updated At"=>"تاريخ التعديل"
+   "Updated At"=>"تاريخ التعديل",
+   "Create Sales"=>"انشاء مبيع",
+   "Payment Method"=>"طريقة الدفع",
+   "Tiger"=>"نمرة"
 
 
 

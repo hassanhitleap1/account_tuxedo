@@ -85,12 +85,14 @@ class Calculator extends BaseObject
     public static function decreaseSales($model)
     {
         $dateTime = Carbon::parse($model->date);
-        $sales = Sales::find()->andWhere('date(date) = :date', [':date' => $model->toDateString()])->one();
-        
+        $sales = Sales::find()->andWhere('date(date) = :date', [':date' => $dateTime->toDateString()])->andWhere(['payment_method'=>$model->payment_method])->one();
+
         if(is_null($sales )){
             $sales= new Sales();
-            $sales->amount = (float) $sales->amount - (float)  $model->amount ;
+            $sales->amount  =  (float)   $model->amount ;
             $sales->date = $model->date;
+            $sales->payment_method = $model->payment_method;
+            $sales->note = $model->note;
         }else{
             $sales->amount =  $model->amount ;    
         }
@@ -112,6 +114,7 @@ class Calculator extends BaseObject
             $sales->amount  =  (float)   $model->amount ;
             $sales->date = $model->date;
             $sales->payment_method = $model->payment_method;
+            $sales->note = $model->note;
         }else{
             $sales->amount =  (float) $sales->amount + (float)  $model->amount ; 
         }

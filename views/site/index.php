@@ -98,59 +98,65 @@ $this->title = 'tuxedo';
 </div>
 
 <div class="row">
-<h3> <?= Yii::t('app','Sales')?></h3>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col"><?=Yii::t('app','Name')?></th>
-      <th scope="col"><?=Yii::t('app','Sales')?></th>
-      <th scope="col"><?=Yii::t('app','Note')?></th>
-      <th scope="col"><?=Yii::t('app','Tiger')?></th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach($salesEmployees as $key=> $salesEmployee ): ?>
+    <div class="col-md-8">
+    <h3> <?= Yii::t('app','Sales')?></h3>
+    <table class="table">
+    <thead>
         <tr>
-            <th scope="row"><?=++ $key?></th>
-            <td><?=$salesEmployee->employee->name?></td>
-            <td><?=$salesEmployee->amount?></td>
-            <td><?=$salesEmployee->note?></td>
-            <td><?=$salesEmployee->salesEmployee->amount??''?></td>
+        <th scope="col">#</th>
+        <th scope="col"><?=Yii::t('app','Name')?></th>
+        <th scope="col"><?=Yii::t('app','Sales')?></th>
+        <th scope="col"><?=Yii::t('app','Note')?></th>
+        <th scope="col"><?=Yii::t('app','Tiger')?></th>
         </tr>
-    <?php endforeach;?>
-  
-  
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+        <?php foreach($salesEmployees as $key=> $salesEmployee ): ?>
+            <tr>
+                <th scope="row"><?=++ $key?></th>
+                <td><?=$salesEmployee->employee->name?></td>
+                <td><?=$salesEmployee->amount?></td>
+                <td><?=$salesEmployee->note?></td>
+                <td><?=$salesEmployee->salesEmployee->amount??''?></td>
+            </tr>
+        <?php endforeach;?>
+    
+    
+    </tbody>
+    </table>
+    </div>
 </div>
+  
 <hr/>
 <div class="row">
-<h3> <?= Yii::t('app','Expenses')?></h3>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col"><?=Yii::t('app','Name')?></th>
-      <th scope="col"><?=Yii::t('app','Amount')?></th>
-      <th scope="col"><?=Yii::t('app','Note')?></th>
-
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach($expenses as $key=> $expense ): ?>
+    <div class="col-md-9">
+    <h3> <?= Yii::t('app','Expenses')?></h3>
+    <table class="table">
+    <thead>
         <tr>
-            <th scope="row"><?=++ $key?></th>
-            <td><?=$expense->employee->name?></td>
-            <td><?=$expense->amount?></td>
-            <td><?=$expense->note?></td>
-          
+        <th scope="col">#</th>
+        <th scope="col"><?=Yii::t('app','Name')?></th>
+        <th scope="col"><?=Yii::t('app','Amount')?></th>
+        <th scope="col"><?=Yii::t('app','Note')?></th>
+
         </tr>
-    <?php endforeach;?>
+    </thead>
+    <tbody>
+        <?php foreach($expenses as $key=> $expense ): ?>
+            <tr>
+                <th scope="row"><?=++ $key?></th>
+                <td><?=$expense->employee->name?></td>
+                <td><?=$expense->amount?></td>
+                <td><?=$expense->note?></td>
+            
+            </tr>
+        <?php endforeach;?>
+    
+    
+    </tbody>
+    </table>
+    </div>
   
-  
-  </tbody>
-</table>
 </div>
 
 
