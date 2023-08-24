@@ -64,6 +64,9 @@ class SalesEmployees extends \yii\db\ActiveRecord
     public function getEmployee(){
         return $this->hasOne(Employees::className(), ['id'=>'employee_id']);
     }
+    public function getSalesEmployee(){
+        return $this->hasOne(SalesEmployees::className(), ['id'=>'employee_id']);
+    }
     /**
      * {@inheritdoc}
      * @return SalesEmployeesQuery the active query used by this AR class.

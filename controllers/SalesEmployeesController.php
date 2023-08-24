@@ -77,6 +77,7 @@ class SalesEmployeesController extends Controller
                     $tigerModel->amount= $model->amount;
                     $tigerModel->date= $model->date;
                     $tigerModel->note= $model->note;
+                    $tigerModel->sales_employees_id= $model->id;
                     $tigerModel->save();
                 }
                 return $this->redirect(['view', 'id' => $model->id]);

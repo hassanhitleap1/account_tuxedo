@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\SalesEmployees;
 use Yii;
 use Carbon\Carbon;
 use app\models\Debt;
@@ -64,7 +65,33 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+
+     public function actionIndex(){
+        $today=Carbon::now("Asia/Amman");
+
+        $date=$today->toDateString();
+        $date= Yii::$app->getRequest()->getQueryParam('date', $date);
+
+        $sales_amount_daily=Sales::find()->where(['date('.Sales::tableName().'.date)'=>$date])->sum('amount');
+        $sales_amount_daily_visa=Sales::find()->where(['date('.Sales::tableName().'.date)'=>$date,
+             'payment_method'=>'visa' ])->sum('amount'); 
+        $sales_amount_daily_cash=Sales::find()
+        ->where(['date('.Sales::tableName().'.date)'=>$date,
+             'payment_method'=>'cash' ])->sum('amount'); 
+        $expenses_daily=Expenses::find()->where(['date('.Expenses::tableName().'.date)'=>$date ])->sum('amount');     
+        $salesEmployees=SalesEmployees::find()->where(['date('.SalesEmployees::tableName().'.date)'=>$today])->all();
+        $expenses=Expenses::find()->where(['date('.Expenses::tableName().'.date)'=>$today])->all();
+        return $this->render('index',[
+                    'sales_amount_daily'=>$sales_amount_daily,
+                    'sales_amount_daily_visa'=>$sales_amount_daily_visa,
+                    'sales_amount_daily_cash'=>$sales_amount_daily_cash,
+                    'salesEmployees'=>$salesEmployees,
+                    'expenses_daily'=>$expenses_daily,
+                    'expenses'=>$expenses,
+                    'date'=>$date
+                ]);
+        }
+    public function actionMonthy()
     {
         $now = Carbon::now();
         $year= $now->year;
@@ -92,7 +119,7 @@ class SiteController extends Controller
         $employees[$key]['available_debt']= ((float) $employee['salary'] / 30) *  $day - (  (float)$employee['amount_debt']  + (float) $employee['amount_draws'] + $employee['amount_discount'])   ;
        }
     
-        return $this->render('index',['employees'=>$employees,'sales_amount_monthly'=>$sales_amount_monthly,'month'=>$month ,'expenses_amount_monthly'=>$expenses_amount_monthly,'sales_amount_monthly_visa'=>$sales_amount_monthly_visa,'sales_amount_monthly_cash'=>$sales_amount_monthly_cash]);
+        return $this->render('monthy',['employees'=>$employees,'sales_amount_monthly'=>$sales_amount_monthly,'month'=>$month ,'expenses_amount_monthly'=>$expenses_amount_monthly,'sales_amount_monthly_visa'=>$sales_amount_monthly_visa,'sales_amount_monthly_cash'=>$sales_amount_monthly_cash]);
     }
 
     /**

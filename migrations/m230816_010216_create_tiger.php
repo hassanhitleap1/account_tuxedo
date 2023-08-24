@@ -26,6 +26,7 @@ class m230816_010216_create_tiger extends Migration
             'employee_id'=>$this->integer()->notNull(),
             'note' => $this->text()->null(),
             'date' => $this->dateTime()->notNull()->defaultValue(null),
+            'sales_employees_id'=>$this->integer()->null(),
             'created_at' => $this->dateTime()->notNull()->defaultValue(null),
             'updated_at' => $this->dateTime()->notNull()->defaultValue(null),
         ], $tableOptions);

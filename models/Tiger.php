@@ -34,7 +34,7 @@ class Tiger extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['amount'], 'number'],
+            [['amount','sales_employees_id'], 'number'],
             [['employee_id'], 'required'],
             [['employee_id'], 'integer'],
             [['date', 'created_at', 'updated_at'], 'safe'],
