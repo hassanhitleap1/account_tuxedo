@@ -6,6 +6,8 @@ use kartik\select2\Select2;
 use yii\bootstrap5\ActiveForm;
 $sumTiger=[];
 $sumExpenses=[];
+$TotalSalesEmployee=0;
+$totalExpenses=0;
 /** @var yii\web\View $this */
 
 $this->title = 'tuxedo';
@@ -115,6 +117,7 @@ $this->title = 'tuxedo';
     <tbody>
         <?php foreach($salesEmployees as $key=> $salesEmployee ): ?>
            <?php 
+           $TotalSalesEmployee+= (float)$salesEmployee->amount;
                 if(!is_null($salesEmployee->salesEmployee)){
                     if(isset($sumTiger[$salesEmployee->employee->id])){
                         $sumTiger[$salesEmployee->employee->id]['tiger'] += (float) $salesEmployee->salesEmployee->amount;    
@@ -135,7 +138,16 @@ $this->title = 'tuxedo';
                 <td><?= $salesEmployee->salesEmployee->amount??''?></td>
             </tr>
         <?php endforeach;?>
-    
+        <tfoot>
+            <tr>
+                <th scope="row"></th>
+                <td><?= Yii::t('app','Total')?></td>
+                <td><?=$TotalSalesEmployee?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+          </tfoot>
     
     </tbody>
     </table>
@@ -183,6 +195,7 @@ $this->title = 'tuxedo';
         <?php foreach($expenses as $key=> $expense ): ?>
 
             <?php 
+             $totalExpenses += (float) $expense->amount;
                 if(!is_null($expense->employee)){
                     if(isset($sumExpenses[$expense->employee->id])){
                         $sumExpenses[$expense->employee->id]['expense'] += (float) $expense->amount;    
@@ -204,6 +217,16 @@ $this->title = 'tuxedo';
             
             </tr>
         <?php endforeach;?>
+
+        <tfoot>
+            <tr>
+                <th scope="row"> </th>
+                <td><?= Yii::t('app','Total')?></td>
+                <td><?= $totalExpenses?></td>
+                <td></td>
+          
+            </tr>
+          </tfoot>
     
     
     </tbody>
