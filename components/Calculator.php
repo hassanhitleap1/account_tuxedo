@@ -129,6 +129,43 @@ class Calculator extends BaseObject
     public static function faTOen($string) {
         return strtr($string, array('۰'=>'0', '۱'=>'1', '۲'=>'2', '۳'=>'3', '۴'=>'4', '۵'=>'5', '۶'=>'6', '۷'=>'7', '۸'=>'8', '۹'=>'9', '٠'=>'0', '١'=>'1', '٢'=>'2', '٣'=>'3', '٤'=>'4', '٥'=>'5', '٦'=>'6', '٧'=>'7', '٨'=>'8', '٩'=>'9'));
     }
+
+
+
+    public  static function timeDifference($start_time, $end_time){
+
+        $timestamp1 = strtotime($start_time);
+        $timestamp2 = strtotime($end_time);
+    
+        if ($timestamp1 === false || $timestamp2 === false) {
+            // Invalid time format
+            return "Invalid time format";
+        }
+
+        // Calculate the time difference in seconds
+        $difference = abs($timestamp2 - $timestamp1);
+    
+        // Calculate hours, minutes, and seconds from the difference
+        $hours = floor($difference / 3600);
+        $minutes = floor(($difference % 3600) / 60);
+        $seconds = $difference % 60;
+
+        // Construct the difference string
+        $differenceString = "";
+
+        if ($hours > 0) {
+            $differenceString .= $hours . " ساعة ";
+        }
+        if ($minutes > 0) {
+            $differenceString .= $minutes . " دقيقة ";
+        }
+        if ($seconds > 0) {
+            $differenceString .= $seconds . " ثانية";
+        }
+
+        return trim($differenceString);
+
+    } 
   
 
 }

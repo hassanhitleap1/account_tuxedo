@@ -162,11 +162,47 @@ class SiteController extends Controller
 
         $model= Employees::findOne($id);
         $workingHours=WorkingHours::find()->where(['month('.WorkingHours::tableName().'.date)'=>$month])->all();
-        $debt= Debt::find()->where(['month('.Debt::tableName().'.date)'=>$month])->all();
-        $commissions= Commission::find()->where(['month('.Commission::tableName().'.date)'=>$month])->all();
-        $draws= Draws::find()->where(['month('.Draws::tableName().'.date)'=>$month])->all();
-        $tiger= Tiger::find()->where(['month('.Tiger::tableName().'.date)'=>$month])->all();
-        $discounts= Discounts::find()->where(['month('.Discounts::tableName().'.date)'=>$month])->all();
+        $debts= Debt::find()->select(['sum(amount) as sum_debt','date'])
+        ->where(['month('.Debt::tableName().'.date)'=>$month])
+        ->groupBy(Debt::tableName().'.date')
+        ->orderBy([Debt::tableName().'.date' => SORT_ASC])
+        ->asArray()
+        ->all();
+
+       
+        $commissions= Commission::find()
+        ->select(['sum(amount) as sum_commission','date'])
+        ->where(['month('.Commission::tableName().'.date)'=>$month])
+        ->groupBy(Commission::tableName().'.date')
+        ->orderBy([Commission::tableName().'.date' => SORT_ASC])
+        ->asArray()
+        ->orderBy(['date' => SORT_ASC])
+        ->all();
+        
+       
+        $draws= Draws::find()
+        ->select(['sum(amount) as sum_draw','date'])
+        ->where(['month('.Draws::tableName().'.date)'=>$month])
+        ->groupBy(Draws::tableName().'.date')
+        ->orderBy([Draws::tableName().'.date' => SORT_ASC])
+        ->asArray()
+        ->all();
+
+        $tigers= Tiger::find()
+        ->select(['sum(amount) as sum_tiger','date'])
+        ->where(['month('.Tiger::tableName().'.date)'=>$month])
+        ->groupBy(Tiger::tableName().'.date')
+        ->orderBy([Tiger::tableName().'.date' => SORT_ASC])
+        ->asArray()
+        ->all();
+
+        $discounts= Discounts::find()
+        ->select(['sum(amount) as sum_discount','date'])
+        ->where(['month('.Discounts::tableName().'.date)'=>$month])
+        ->groupBy(Discounts::tableName().'.date')
+        ->orderBy([Discounts::tableName().'.date' => SORT_ASC])
+        ->asArray()
+        ->all();
 
         
         
@@ -174,6 +210,13 @@ class SiteController extends Controller
 
         return $this->render('employee-details', [
             'model' => $model,
+            'workingHours'=>$workingHours,
+             'commissions'=>$commissions,
+             'draws'=>$draws,
+             'tigers'=>$tigers,
+            'debts'=>$debts,
+            'discounts'=>$discounts
+
         ]);
     }
     /**
