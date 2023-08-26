@@ -107,6 +107,7 @@ $this->title = 'tuxedo';
         <th scope="col">#</th>
         <th scope="col"><?=Yii::t('app','Name')?></th>
         <th scope="col"><?=Yii::t('app','Sales')?></th>
+        <th scope="col"><?=Yii::t('app','Payment Method')?></th>
         <th scope="col"><?=Yii::t('app','Note')?></th>
         <th scope="col"><?=Yii::t('app','Tiger')?></th>
         </tr>
@@ -129,6 +130,7 @@ $this->title = 'tuxedo';
                 <th scope="row"><?=++ $key?></th>
                 <td><?=$salesEmployee->employee->name ?></td>
                 <td><?=$salesEmployee->amount?></td>
+                <td><?=$salesEmployee->payment_method ?></td>
                 <td><?=$salesEmployee->note?></td>
                 <td><?= $salesEmployee->salesEmployee->amount??''?></td>
             </tr>

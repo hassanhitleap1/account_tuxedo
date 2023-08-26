@@ -154,3 +154,7 @@ a.desc:after {
     width: 200px;
     height: 200px;
 }
+
+.text-decoration{
+    text-decoration:none;
+}

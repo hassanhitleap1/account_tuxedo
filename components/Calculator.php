@@ -34,7 +34,7 @@ class Calculator extends BaseObject
         $commission= new Commission();
         $commission->amount =   $model->amount;
         $commission->employee_id= $model->employee_id;
-        $commission->date= Carbon::parse($model->date."00:00");
+        $commission->date=   $model->date;;
         $commission->note= $model->name;
         $commission->save();
     }
@@ -54,7 +54,7 @@ class Calculator extends BaseObject
         $draws= new Draws();
         $draws->amount =   $model->amount;
         $draws->employee_id= $model->employee_id;
-        $draws->date= Carbon::parse($model->date."00:00");
+        $draws->date= $model->date;
         $draws->note= $model->name;
         $draws->save();
     }
@@ -64,7 +64,7 @@ class Calculator extends BaseObject
         $debt= new Debt();
         $debt->amount =   $model->amount;
         $debt->employee_id= $model->employee_id;
-        $debt->date= Carbon::parse($model->date."00:00");
+        $debt->date=  $model->date;
         $debt->note= $model->name;
         $debt->save();
     }

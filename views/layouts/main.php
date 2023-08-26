@@ -38,6 +38,7 @@ if (Yii::$app->user->isGuest) {
 }else{
 
     $menuItems[] =  ['label' => Yii::t('app', 'Home') , 'url' => ['/site/index']];
+    $menuItems[] =  ['label' => Yii::t('app', 'Monthy') , 'url' => ['/site/monthy']];
 
 
 

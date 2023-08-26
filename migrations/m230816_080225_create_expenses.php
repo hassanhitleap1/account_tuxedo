@@ -25,7 +25,7 @@ class m230816_080225_create_expenses extends Migration
             'employee_id' => $this->integer()->null(),
             'amount' => $this->double()->notNull(),
             'note' => $this->text()->null(),
-            'date' => $this->dateTime()->notNull()->defaultValue(null),
+            'date' => $this->date()->notNull()->defaultValue(null),
             'created_at' => $this->dateTime()->notNull()->defaultValue(null),
             'updated_at' => $this->dateTime()->notNull()->defaultValue(null),
         ], $tableOptions);

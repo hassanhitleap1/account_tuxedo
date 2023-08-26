@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
 
@@ -117,29 +118,29 @@ $this->title = 'tuxedo';
 
 <div class="row">
     <?php foreach($employees as $employee):?>
-        <div class="col-4">
-        <div class="card">
-            <img src="https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp" class="card-img-top avatar-employee" alt="...">
+        <div class="col-6">
+        <a class="card  text-decoration"  href="<?= Url::to(['site/employee-details', 'id' => $employee['id']]);?>" >
                 <div class="card-body">
-                    <h5 class="card-title"><?= $employee['name']?></h5>
+                    <h5 class="card-title text-center" ><?= $employee['name']?></h5>
                     <div class="card-text">
                         <div class="row">
-                            <div class="col-6">
-                                <?= Yii::t('app','Salary') ?>: (<?= $employee['salary']?>)
+                            <div class="col-6 mt-2">
+                                <?= Yii::t('app','Salary') ?>: ( <?= $employee['salary']?> )
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 mt-2">
                                 <?= Yii::t('app','Debt') ?>: (<?= round($employee['amount_debt'],2)?>)
                             </div>
                         </div>
+                        <hr />
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6 mt-2">
                                 <?= Yii::t('app','Commissions') ?>: (<?= round($employee['amount_commission'],2)?>)
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 mt-2">
                                 <?= Yii::t('app','Draws') ?>:  (<?= round($employee['amount_draws'],2)?>)
                             </div>
                         </div>
-
+                        <hr />
                         <div class="row">
                             <div class="col-6">
                                 <?= Yii::t('app','Tigers') ?>: (<?= round($employee['amount_tiger'],2)?>)
@@ -148,7 +149,7 @@ $this->title = 'tuxedo';
                                 <?= Yii::t('app','Sales') ?>: (<?= round($employee['amount_sales_employees'],2)?>)
                             </div>
                         </div>
-
+                        <hr />
                         <div class="row">
                             <div class="col-6">
                                 <?= Yii::t('app','Discounts') ?>: (<?= round($employee['amount_discount'],2)?>)
@@ -158,9 +159,21 @@ $this->title = 'tuxedo';
                                 <?= Yii::t('app','Available debt') ?>: (<?= round($employee['available_debt'],2)?>)
                             </div>
                         </div>
+
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-12">
+                                <?= Yii::t('app','Round Balance') ?>: (<?= round($employee['round_balance'],2)?>)
+                            </div>
+                        
+                          
+
+                        </div>
                     </div>
                 </div>
-            </div>
+    </a>
         </div>
      <?php endforeach;?>   
      </div>

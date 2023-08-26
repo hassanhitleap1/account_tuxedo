@@ -2,18 +2,23 @@
 
 namespace app\controllers;
 
-use app\models\SalesEmployees;
 use Yii;
 use Carbon\Carbon;
 use app\models\Debt;
+use app\models\Draws;
 use app\models\Sales;
+use app\models\Tiger;
 use yii\web\Response;
 use yii\web\Controller;
 use app\models\Expenses;
+use app\models\Discounts;
 use app\models\Employees;
 use app\models\LoginForm;
+use app\models\Commission;
 use app\models\ContactForm;
 use yii\filters\VerbFilter;
+use app\models\WorkingHours;
+use app\models\SalesEmployees;
 use yii\filters\AccessControl;
 
 class SiteController extends Controller
@@ -150,8 +155,23 @@ class SiteController extends Controller
 
 
     public function actionEmployeeDetails($id){
+
+        $now = Carbon::now();
+        $year= $now->year;
+        $month= Yii::$app->getRequest()->getQueryParam('month', $now->month);
+
         $model= Employees::findOne($id);
-      
+        $workingHours=WorkingHours::find()->where(['month('.WorkingHours::tableName().'.date)'=>$month])->all();
+        $debt= Debt::find()->where(['month('.Debt::tableName().'.date)'=>$month])->all();
+        $commissions= Commission::find()->where(['month('.Commission::tableName().'.date)'=>$month])->all();
+        $draws= Draws::find()->where(['month('.Draws::tableName().'.date)'=>$month])->all();
+        $tiger= Tiger::find()->where(['month('.Tiger::tableName().'.date)'=>$month])->all();
+        $discounts= Discounts::find()->where(['month('.Discounts::tableName().'.date)'=>$month])->all();
+
+        
+        
+
+
         return $this->render('employee-details', [
             'model' => $model,
         ]);

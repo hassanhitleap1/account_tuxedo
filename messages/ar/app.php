@@ -313,7 +313,8 @@ return [
    "Payment Method"=>"طريقة الدفع",
    "Tiger"=>"نمرة",
    "Sum Tiger"=>"مجموع النمر",
-   "Sum Expenses"=>"مجموع السحوبات"
+   "Sum Expenses"=>"مجموع السحوبات",
+   "Monthy"=>"المورقة الشهرية"
 
 
 

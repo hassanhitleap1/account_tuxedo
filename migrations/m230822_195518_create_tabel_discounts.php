@@ -25,7 +25,7 @@ class m230822_195518_create_tabel_discounts extends Migration
             'amount'=>$this->double()->notNull()->defaultValue(0),
             'employee_id'=>$this->integer()->notNull(),
             'note' => $this->text()->null(),
-            'date' => $this->dateTime()->notNull()->defaultValue(null),
+            'date' => $this->date()->notNull()->defaultValue(null),
             'created_at' => $this->dateTime()->notNull()->defaultValue(null),
             'updated_at' => $this->dateTime()->notNull()->defaultValue(null),
         ], $tableOptions);
