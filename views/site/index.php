@@ -4,7 +4,7 @@ use yii\bootstrap5\Html;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\bootstrap5\ActiveForm;
-
+$sumTiger=[];
 /** @var yii\web\View $this */
 
 $this->title = 'tuxedo';
@@ -112,12 +112,24 @@ $this->title = 'tuxedo';
     </thead>
     <tbody>
         <?php foreach($salesEmployees as $key=> $salesEmployee ): ?>
+           <?php 
+                if(!is_null($salesEmployee->salesEmployee)){
+                    if(isset($sumTiger[$salesEmployee->employee->id])){
+                        $sumTiger[$salesEmployee->employee->id]['tiger'] += (float) $salesEmployee->salesEmployee->amount;    
+                        $sumTiger[$salesEmployee->employee->id]['name'] =  $salesEmployee->employee->name;    
+                    }else{
+                        $sumTiger[$salesEmployee->employee->id]['tiger']= (float) $salesEmployee->salesEmployee->amount;
+                        $sumTiger[$salesEmployee->employee->id]['name'] =  $salesEmployee->employee->name;   
+                    }
+                 
+                }
+            ?>
             <tr>
                 <th scope="row"><?=++ $key?></th>
                 <td><?=$salesEmployee->employee->name?></td>
                 <td><?=$salesEmployee->amount?></td>
                 <td><?=$salesEmployee->note?></td>
-                <td><?=$salesEmployee->salesEmployee->amount??''?></td>
+                <td><?= $salesEmployee->salesEmployee->amount??''?></td>
             </tr>
         <?php endforeach;?>
     
@@ -125,11 +137,34 @@ $this->title = 'tuxedo';
     </tbody>
     </table>
     </div>
+    
+    <div class="col-md-4">
+    <h3> <?= Yii::t('app','Sum Tiger')?></h3>
+    <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col"><?=Yii::t('app','Name')?></th>
+        <th scope="col"><?=Yii::t('app','Sum Tiger')?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($sumTiger as $key => $value ): ?>
+            <tr>
+                <th scope="row"><?=++ $key?></th>
+                <td><?=$value['name']?></td>
+                <td><?=$value['tiger']?></td>
+            </tr>
+        <?php endforeach;?>
+    </tbody>
+    </table>
+
+    </div>
 </div>
   
 <hr/>
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-8">
     <h3> <?= Yii::t('app','Expenses')?></h3>
     <table class="table">
     <thead>

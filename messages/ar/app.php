@@ -311,7 +311,8 @@ return [
    "Updated At"=>"تاريخ التعديل",
    "Create Sales"=>"انشاء مبيع",
    "Payment Method"=>"طريقة الدفع",
-   "Tiger"=>"نمرة"
+   "Tiger"=>"نمرة",
+   "Sum Tiger"=>"مجموع النمر"
 
 
 

@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'employee.name',
             'note',
             'date',
+            'sales_employees_id',
             //'created_at',
             //'updated_at',
             [

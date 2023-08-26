@@ -65,7 +65,7 @@ class SalesEmployees extends \yii\db\ActiveRecord
         return $this->hasOne(Employees::className(), ['id'=>'employee_id']);
     }
     public function getSalesEmployee(){
-        return $this->hasOne(SalesEmployees::className(), ['id'=>'employee_id']);
+        return $this->hasOne(Tiger::className(), ['sales_employees_id'=>'id']);
     }
     /**
      * {@inheritdoc}

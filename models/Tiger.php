@@ -52,6 +52,7 @@ class Tiger extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'amount' => Yii::t('app', 'Amount'),
             'employee_id' => Yii::t('app', 'Employee ID'),
+            'sales_employees_id'=>Yii::t('app', 'Sales Employees id'),
             'note' => Yii::t('app', 'Note'),
             'date' => Yii::t('app', 'Date'),
             'created_at' => Yii::t('app', 'Created At'),

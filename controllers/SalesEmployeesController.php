@@ -74,7 +74,7 @@ class SalesEmployeesController extends Controller
                 if(!is_null($model->tiger) && $model->tiger > 0 ){
                     $tigerModel= new  Tiger();
                     $tigerModel->employee_id= $model->employee_id;
-                    $tigerModel->amount= $model->amount;
+                    $tigerModel->amount= $model->tiger;
                     $tigerModel->date= $model->date;
                     $tigerModel->note= $model->note;
                     $tigerModel->sales_employees_id= $model->id;
