@@ -312,7 +312,8 @@ return [
    "Create Sales"=>"انشاء مبيع",
    "Payment Method"=>"طريقة الدفع",
    "Tiger"=>"نمرة",
-   "Sum Tiger"=>"مجموع النمر"
+   "Sum Tiger"=>"مجموع النمر",
+   "Sum Expenses"=>"مجموع السحوبات"
 
 
 

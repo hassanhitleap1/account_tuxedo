@@ -83,7 +83,7 @@ class SiteController extends Controller
         
        
         
-        $expenses=Expenses::find()->where(['date('.Expenses::tableName().'.date)'=>$today])->all();
+        $expenses=Expenses::find()->where(['date('.Expenses::tableName().'.date)'=>$date ])->all();
         return $this->render('index',[
                     'sales_amount_daily'=>$sales_amount_daily,
                     'sales_amount_daily_visa'=>$sales_amount_daily_visa,

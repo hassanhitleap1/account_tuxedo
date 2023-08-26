@@ -5,6 +5,7 @@ use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\bootstrap5\ActiveForm;
 $sumTiger=[];
+$sumExpenses=[];
 /** @var yii\web\View $this */
 
 $this->title = 'tuxedo';
@@ -126,7 +127,7 @@ $this->title = 'tuxedo';
             ?>
             <tr>
                 <th scope="row"><?=++ $key?></th>
-                <td><?=$salesEmployee->employee->name?></td>
+                <td><?=$salesEmployee->employee->name ?></td>
                 <td><?=$salesEmployee->amount?></td>
                 <td><?=$salesEmployee->note?></td>
                 <td><?= $salesEmployee->salesEmployee->amount??''?></td>
@@ -149,9 +150,9 @@ $this->title = 'tuxedo';
         </tr>
     </thead>
     <tbody>
-    <?php foreach($sumTiger as $key => $value ): ?>
+    <?php foreach($sumTiger as $keySumTiger => $value ): ?>
             <tr>
-                <th scope="row"><?=++ $key?></th>
+                <th scope="row"><?=++ $keySumTiger?></th>
                 <td><?=$value['name']?></td>
                 <td><?=$value['tiger']?></td>
             </tr>
@@ -178,9 +179,24 @@ $this->title = 'tuxedo';
     </thead>
     <tbody>
         <?php foreach($expenses as $key=> $expense ): ?>
+
+            <?php 
+                if(!is_null($expense->employee)){
+                    if(isset($sumExpenses[$expense->employee->id])){
+                        $sumExpenses[$expense->employee->id]['expense'] += (float) $expense->amount;    
+                        $sumExpenses[$expense->employee->id]['name'] =  $expense->employee->name;    
+                    }else{
+                        $sumExpenses[$expense->employee->id]['expense']= (float) $expense->amount;
+                        $sumExpenses[$expense->employee->id]['name'] =  $expense->employee->name;   
+                    }
+                }
+                  
+                 
+                
+            ?>
             <tr>
                 <th scope="row"><?=++ $key?></th>
-                <td><?=$expense->employee->name?></td>
+                <td><?=$expense->employee->name??''?></td>
                 <td><?=$expense->amount?></td>
                 <td><?=$expense->note?></td>
             
@@ -190,6 +206,30 @@ $this->title = 'tuxedo';
     
     </tbody>
     </table>
+
+    
+    </div>
+    <div class="col-md-4">
+    <h3> <?= Yii::t('app','Sum Expenses')?></h3>
+    <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col"><?=Yii::t('app','Name')?></th>
+        <th scope="col"><?=Yii::t('app','Sum Tiger')?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($sumExpenses as $keySumExpenses => $value ): ?>
+            <tr>
+                <th scope="row"><?=++ $keySumExpenses?></th>
+                <td><?=$value['name']?></td>
+                <td><?=$value['expense']?></td>
+            </tr>
+        <?php endforeach;?>
+    </tbody>
+    </table>
+
     </div>
   
 </div>
