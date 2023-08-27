@@ -122,9 +122,17 @@ class SiteController extends Controller
         "(select IfNUll(sum(sales_employees.amount),0) from sales_employees where sales_employees.employee_id = ".Employees::tableName().".id and month(sales_employees.date)= $month   and year(sales_employees.date)=$year) as amount_sales_employees",
         "(select IfNUll(sum(discounts.amount),0) from discounts where discounts.employee_id = ".Employees::tableName().".id  and month(discounts.date)= $month   and year(discounts.date)=$year ) as amount_discount",
         ])->asArray()->all();
-
+       
+        $firstDateOfMonth = date('Y-m-01');
        foreach($employees as $key => $employee){
-        $employees[$key]['available_debt']= ((float) $employee['salary'] / 30) *  $day - (  (float)$employee['amount_debt']  + (float) $employee['amount_draws'] + $employee['amount_discount'])   ;
+        if($employee['start_date'] > $firstDateOfMonth  ){
+            Carbon::parse($employee['start_date'])->day;
+            $dayOfEmployee = $day - Carbon::parse($employee['start_date'])->day;
+            $employees[$key]['available_debt']= ((float) $employee['salary'] / 30) *  $dayOfEmployee - (  (float)$employee['amount_debt']  + (float) $employee['amount_draws'] + $employee['amount_discount'])   ;
+        }else{
+            $employees[$key]['available_debt']= ((float) $employee['salary'] / 30) *  $day - (  (float)$employee['amount_debt']  + (float) $employee['amount_draws'] + $employee['amount_discount'])   ;
+        }
+ 
        }
     
         return $this->render('monthy',['employees'=>$employees,'sales_amount_monthly'=>$sales_amount_monthly,'month'=>$month ,'expenses_amount_monthly'=>$expenses_amount_monthly,'sales_amount_monthly_visa'=>$sales_amount_monthly_visa,'sales_amount_monthly_cash'=>$sales_amount_monthly_cash]);
@@ -157,8 +165,11 @@ class SiteController extends Controller
     public function actionEmployeeDetails($id){
 
         $now = Carbon::now();
-        $year= $now->year;
-        $month= Yii::$app->getRequest()->getQueryParam('month', $now->month);
+        $year =$now->year; // Get the current year
+        $month = Yii::$app->getRequest()->getQueryParam('month', $now->month);// August
+        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $datesInAugust = range(1, $daysInMonth);
+
 
         $model= Employees::findOne($id);
         $workingHours=WorkingHours::find()->where(['month('.WorkingHours::tableName().'.date)'=>$month])->all();
@@ -215,7 +226,10 @@ class SiteController extends Controller
              'draws'=>$draws,
              'tigers'=>$tigers,
             'debts'=>$debts,
-            'discounts'=>$discounts
+            'discounts'=>$discounts,
+            'datesInAugust'=>$datesInAugust,
+            'month'=>$month,
+            'year'=>$year
 
         ]);
     }

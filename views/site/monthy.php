@@ -164,10 +164,13 @@ $this->title = 'tuxedo';
                         <hr />
 
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <?= Yii::t('app','Round Balance') ?>: (<?= round($employee['round_balance'],2)?>)
                             </div>
                         
+                            <div class="col-6">
+                                <?= Yii::t('app','Start Date') ?>: <?= $employee['start_date'] ?>
+                            </div>
                           
 
                         </div>

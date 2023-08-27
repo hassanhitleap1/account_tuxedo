@@ -124,6 +124,11 @@ class Expenses extends \yii\db\ActiveRecord
     public function getEmployee(){
         return $this->hasOne(Employees::className(), ['id'=>'employee_id']);
     }
+
+    public function getTypeOfExpense(){
+        return $this->hasOne(TypesOfExpenses::className(), ['type_id'=>'id']);
+    }
+    
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
     }

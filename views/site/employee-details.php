@@ -1,6 +1,8 @@
 <?php
 
+use yii\helpers\Html;
 use app\components\Calculator;
+use yii\bootstrap5\ActiveForm;
 
 /** @var yii\web\View $this */
 
@@ -10,20 +12,39 @@ $this->title = $model->name;
 
 
 
-$year = date('Y'); // Get the current year
-$month = 8;        // August
-
-// Calculate the number of days in the month
-$daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-
-// Create an array containing all the dates in the 8th month
-$datesInAugust = range(1, $daysInMonth);
-
-
 ?>
 <div class="">
   <h1 class="text-center"><?=$model->name?></h1>
   <hr/>
+
+  <div class="row">
+    <?php $form = ActiveForm::begin([
+            'action' => ['site/employee-details?id='.$model->id],
+            'method' => 'get',
+            'id'=>"form-month"
+            
+        ]); ?>
+        <div class="col-md-8">
+            <?php
+                echo Html::dropDownList('month', $month, [
+                    1=>1,
+                    2=>2,
+                    3=>3,
+                    4=>4,
+                    5=>5,
+                    6=>6,
+                    7=>7,
+                    8=>8,
+                    9=>9, 
+                    10=>10, 
+                    11=>11, 
+                    12=>12
+                    ], ['prompt' => 'Select month','id'=>"month-drop-down-list"]);;?>
+        </div>
+
+        <?php ActiveForm::end(); ?>
+    </div>
+    
 <table class="table">
   <thead>
     <tr>
@@ -106,7 +127,7 @@ $datesInAugust = range(1, $daysInMonth);
     ?>
 
       <tr class="<?= $start_time ==''?'table-danger':''?> " >
-        <th scope="row"><?=$key?></th>
+        <th scope="row"><?= ++ $key?></th>
         <td><?= $formattedDate?></td>
         <td><?= $start_time ?></td>
         <td><?= $end_time ?></td>
@@ -127,3 +148,22 @@ $datesInAugust = range(1, $daysInMonth);
 </table>
 
 </div>
+
+
+<script>
+ 
+    // Wait for the document to be fully loaded
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get a reference to the Select2 dropdown
+        var select = document.getElementById("month-drop-down-list");
+     
+     
+        select.addEventListener("change", function () {
+            // Get the form element
+            var form = document.getElementById("form-month"); // Replace with your actual form ID
+            
+            // Submit the form
+            form.submit();
+        });
+    });
+</script>
