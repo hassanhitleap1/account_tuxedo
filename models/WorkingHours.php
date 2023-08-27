@@ -33,10 +33,11 @@ class WorkingHours extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['employee_id'], 'required'],
+            [['employee_id','start_time','end_time'], 'required'],
             [['employee_id'], 'integer'],
             [['start_time', 'end_time', 'date', 'created_at', 'updated_at'], 'safe'],
             [['note'], 'string'],
+            [['date'], 'validateDate'],
         ];
     }
 
@@ -66,6 +67,21 @@ class WorkingHours extends \yii\db\ActiveRecord
         return new WorkingHoursQuery(get_called_class());
     }
 
+
+
+    public function validateDate($attribute)
+    {
+   
+        $workingHours = self::find()->where(['date'=>$this->$attribute,'employee_id'=>$this->employee_id])->all();
+        if(!$this->isNewRecord){
+
+        }
+        if(count($workingHours)){
+            $this->addError($attribute, Yii::t('app','This employee has registered his shift on this date'));
+        }
+
+       
+    }
 
     public function getEmployee(){
         return $this->hasOne(Employees::className(), ['id'=>'employee_id']);
