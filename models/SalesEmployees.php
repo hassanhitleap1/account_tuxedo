@@ -117,7 +117,27 @@ class SalesEmployees extends \yii\db\ActiveRecord
           
         //     $expenses = new Expenses():
         //     Tiger::TYPE_EXPENSES)
+
+
         // }
+        $tiger =  Tiger::find()->where(['sales_employees_id' => $this->id ])->one();
+        if(is_null( $tiger)){
+            $tiger= new  Tiger();
+            $tiger->employee_id= $this->employee_id;
+            $tiger->amount= $this->tiger;
+            $tiger->date= $this->date;
+            $tiger->note= $this->note;
+            $tiger->sales_employees_id= $this->id;
+           
+        }else{
+            $tiger->employee_id= $this->employee_id;
+            $tiger->amount= $this->tiger;
+            $tiger->date= $this->date;
+            $tiger->note= $this->note;
+        }
+      
+
+        $tiger->save();
 
         parent::afterSave($insert, $changedAttributes);
     }
