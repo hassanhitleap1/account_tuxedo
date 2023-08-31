@@ -96,9 +96,6 @@ class SalesEmployees extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         $today=Carbon::now("Asia/Amman");
-        if ($this->isNewRecord){
-            Calculator::increaseSales($this);
-        }
         if (parent::beforeSave($insert)) {
             // Place your custom code here
             if ($this->isNewRecord) {
