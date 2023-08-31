@@ -54,6 +54,7 @@ class SalesEmployees extends \yii\db\ActiveRecord
             'employee_id' => Yii::t('app', 'Employee ID'),
             'note' => Yii::t('app', 'Note'),
             'payment_method'=>Yii::t('app', 'Payment Method'),
+            'tiger'=>Yii::t('app', 'Tiger'),
             'date' => Yii::t('app', 'Date'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),

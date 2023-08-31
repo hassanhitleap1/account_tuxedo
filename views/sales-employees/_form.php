@@ -46,10 +46,12 @@ if($model->isNewRecord){
         <div class="col-6">
  
         <?=  $form->field($model, 'date')->widget(DatePicker::classname(), [
+              'language' => 'en',
             'options' => ['placeholder' => 'Enter  date ...', 'value'=> $date],
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'yyyy-mm-dd',
+                'pickerPosition' => 'top-right',
                 ]
             ]);?>
         </div>

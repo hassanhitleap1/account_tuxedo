@@ -27,10 +27,12 @@ use yii\widgets\ActiveForm;
     <div class="row">
         <div class="col-6">
         <?=  $form->field($model, 'date')->widget(DatePicker::classname(), [
-            'options' => ['placeholder' => 'Enter birth date ...'],
+            'options' => ['placeholder' => 'Enter  date ...'],
+            'language' => 'en',
             'pluginOptions' => [
                 'autoclose' => true,
-                'format' => 'yyyy-mm-dd'
+                'format' => 'yyyy-mm-dd',
+                'pickerPosition' => 'top-right',
             ]
             ]);?>
 

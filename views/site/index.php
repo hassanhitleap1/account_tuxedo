@@ -14,8 +14,17 @@ $this->title = 'tuxedo';
 ?>
 <div class="site-index">
 
-<div class="col-md-12 ">
-
+<div class="row">
+    <div class="col-md-3  col-xs-3 col-sm-3">
+         <?= Html::a(Yii::t('app', 'Create Sales Employees'), ['create'], ['class' => 'btn btn-success']) ?>
+    </div>
+    <div class="col-md-3 col-xs-3 col-sm-3">
+        <?= Html::a(Yii::t('app', 'Create Expenses'), ['create'], ['class' => 'btn btn-success']) ?>
+    </div>
+    <div class="col-md-3 col-xs-3 col-sm-3">
+    <?= Html::a(Yii::t('app', 'Create Working Hours'), ['create'], ['class' => 'btn btn-success']) ?>
+    </div>
+</div>
 <div class="row">
     <?php $form = ActiveForm::begin([
             'action' => ['site/index'],
@@ -23,28 +32,31 @@ $this->title = 'tuxedo';
             'id'=>"form-date"
             
         ]); ?>
-    <div class="col-xl-4 col-lg-6 col-md-6">
+
+<div class="col-xl-4 col-lg-6 col-md-6">
         <?='<label class="form-label">Date</label>';?>
         <?= DatePicker::widget([
                 'name' => 'date',
+                'language' => 'en',
                 'type' => DatePicker::TYPE_COMPONENT_PREPEND,
                 'value' => $date,
                 'options' => ['placeholder' => 'Enter  date ...','id'=>"date"],
                 'pluginOptions' => [
+                    'pickerPosition' => 'top-right',
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
+                    'format' => 'yyyy-mm-dd',
+                    'todayHighlight' => true,
                 ]
             ]); ?> 
             
-        </div>
-        <div class="col-md-4">
-            <button class="btn button-sccess"><?=Yii::t('app',"Search")?></button>
-        </div>
-  
-
-
-    <?php ActiveForm::end(); ?>
 </div>
+<div class="col-md-4">
+    <button class="btn button-sccess"><?=Yii::t('app',"Search")?></button>
+</div>
+
+<?php ActiveForm::end(); ?>
+</div>
+<div class="row">
     <div class="row mt-4">
         <div class="col-xl-6 col-lg-6">
             <div class="card l-bg-cherry">
@@ -98,6 +110,8 @@ $this->title = 'tuxedo';
         </div>
     
     </div>
+
+
 </div>
 
 <div class="row">

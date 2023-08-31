@@ -66,10 +66,12 @@ $types=ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
         <div class="col-6">
         <?=  $form->field($model, 'date')->widget(DatePicker::classname(), [
            'options' => ['placeholder' => 'Enter  date ...', 'value'=> $date],
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'yyyy-mm-dd'
-            ]
+           'language' => 'en',
+           'pluginOptions' => [
+               'autoclose' => true,
+               'format' => 'yyyy-mm-dd',
+             
+           ]
             ]);?>
         </div>
         <div class="col-6">
