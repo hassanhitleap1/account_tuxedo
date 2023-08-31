@@ -68,7 +68,7 @@ if (Yii::$app->user->isGuest) {
     ];
 
 
-    $menuItems[] = ['label' =>  Yii::t('app', 'Sales') , 'url' => ['/sales/index']];
+    // $menuItems[] = ['label' =>  Yii::t('app', 'Sales') , 'url' => ['/sales/index']];
    
     $menuItems[] = ['label' =>Yii::t('app', 'Sales Employees') , 'url' => ['/sales-employees/index']];
   

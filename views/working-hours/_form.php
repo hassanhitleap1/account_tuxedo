@@ -62,34 +62,10 @@ if($model->isNewRecord){
 
     <div class="row">
         <div class="col-6">
-
-        <?=$form->field($model, 'start_time')->widget(\janisto\timepicker\TimePicker::className(), [
-            'language' => 'en',
-            'mode' => 'time',
-            'clientOptions'=>[
-                'timeFormat' => 'HH:mm:ss',
-                'showSecond' => true,
-            ]
-        ]);?>
-
-
-     
-  
+        <?= $form->field($model, 'start_time')->input('time') ?>
         </div>
         <div class="col-6">
-
-
-        <?=$form->field($model, 'end_time')->widget(\janisto\timepicker\TimePicker::className(), [
-            'language' => 'en',
-            'mode' => 'time',
-            'clientOptions'=>[
-                'timeFormat' => 'HH:mm:ss',
-                'showSecond' => true,
-            ]
-        ]);?>
-     
-
-        
+        <?= $form->field($model, 'end_time')->input('time') ?>
         </div>
     </div>
     

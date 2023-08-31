@@ -77,8 +77,8 @@ class SiteController extends Controller
         $date=$today->toDateString();
         $date= Yii::$app->getRequest()->getQueryParam('date', $date);
 
-        $sales_amount_daily=Sales::find()->where(['date('.Sales::tableName().'.date)'=>$date])->sum('amount');
-        $sales_amount_daily_visa=Sales::find()->where(['date('.Sales::tableName().'.date)'=>$date,
+        $sales_amount_daily=SalesEmployees::find()->where(['date('.SalesEmployees::tableName().'.date)'=>$date])->sum('amount');
+        $sales_amount_daily_visa=SalesEmployees::find()->where(['date('.SalesEmployees::tableName().'.date)'=>$date,
              'payment_method'=>'visa' ])->sum('amount'); 
         $sales_amount_daily_cash=Sales::find()
         ->where(['date('.Sales::tableName().'.date)'=>$date,
@@ -106,11 +106,11 @@ class SiteController extends Controller
         $month= Yii::$app->getRequest()->getQueryParam('month', $now->month);
         $day = $now->day;
 
-        $sales_amount_monthly=Sales::find()->where(['month('.Sales::tableName().'.date)'=>$month])->sum('amount');
+        $sales_amount_monthly=SalesEmployees::find()->where(['month('.SalesEmployees::tableName().'.date)'=>$month])->sum('amount');
         
-        $sales_amount_monthly_visa=Sales::find()->where(['month('.Sales::tableName().'.date)'=>$month,
+        $sales_amount_monthly_visa=SalesEmployees::find()->where(['month('.SalesEmployees::tableName().'.date)'=>$month,
              'payment_method'=>'visa' ])->sum('amount'); 
-        $sales_amount_monthly_cash=Sales::find()->where(['month('.Sales::tableName().'.date)'=>$month,
+        $sales_amount_monthly_cash=SalesEmployees::find()->where(['month('.SalesEmployees::tableName().'.date)'=>$month,
              'payment_method'=>'cash' ])->sum('amount'); 
         
         $expenses_amount_monthly=Expenses::find()->where(['month('.Expenses::tableName().'.date)'=>$month])->sum('amount'); 

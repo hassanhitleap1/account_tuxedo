@@ -1,11 +1,13 @@
 <?php
 
-use app\models\Discounts;
-use yii\helpers\Html;
+use Yii;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use yii\helpers\Html;
 use yii\widgets\Pjax;
+use yii\grid\GridView;
+use app\models\Discounts;
+use yii\grid\ActionColumn;
+use kartik\date\DatePicker;
 /** @var yii\web\View $this */
 /** @var app\models\DiscountsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -34,7 +36,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'amount',
             'employee_id',
             'note:ntext',
-            'date',
+            [
+                'attribute' => 'date', // Replace with your attribute
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'language' => 'en',
+                    'attribute' => 'date', // Replace with your attribute
+                    'pluginOptions' => [
+                        'language' => 'en',
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd'
+                    ],
+                ]),
+            ],
             //'created_at',
             //'updated_at',
             [

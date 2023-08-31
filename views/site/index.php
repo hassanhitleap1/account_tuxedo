@@ -16,13 +16,13 @@ $this->title = 'tuxedo';
 
 <div class="row">
     <div class="col-md-3  col-xs-3 col-sm-3">
-         <?= Html::a(Yii::t('app', 'Create Sales Employees'), ['create'], ['class' => 'btn btn-success']) ?>
+         <?= Html::a(Yii::t('app', 'Create Sales Employees'), ['sales-employees/create'], ['class' => 'btn btn-success']) ?>
     </div>
     <div class="col-md-3 col-xs-3 col-sm-3">
-        <?= Html::a(Yii::t('app', 'Create Expenses'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Expenses'), ['expenses/create'], ['class' => 'btn btn-success']) ?>
     </div>
     <div class="col-md-3 col-xs-3 col-sm-3">
-    <?= Html::a(Yii::t('app', 'Create Working Hours'), ['create'], ['class' => 'btn btn-success']) ?>
+    <?= Html::a(Yii::t('app', 'Create Working Hours'), ['working-hours/create'], ['class' => 'btn btn-success']) ?>
     </div>
 </div>
 <div class="row">

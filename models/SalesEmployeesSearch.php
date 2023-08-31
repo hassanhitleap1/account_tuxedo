@@ -57,6 +57,7 @@ class SalesEmployeesSearch extends SalesEmployees
             return $dataProvider;
         }
 
+      
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -67,7 +68,7 @@ class SalesEmployeesSearch extends SalesEmployees
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'note', $this->note]);
+        $query->andFilterWhere(['like', 'note', $this->note])->orderBy(['id'=>SORT_DESC]);
 
         return $dataProvider;
     }
