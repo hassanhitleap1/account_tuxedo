@@ -2,9 +2,10 @@
 
 namespace app\models;
 
-use app\components\Calculator;
 use Yii;
 use Carbon\Carbon;
+use app\models\Expenses;
+use app\components\Calculator;
 
 /**
  * This is the model class for table "{{%sales_employees}}".
@@ -35,7 +36,7 @@ class SalesEmployees extends \yii\db\ActiveRecord
     {
         return [
             [['amount','tiger'], 'number'],
-            [['employee_id','payment_method'], 'required'],
+            [['employee_id','payment_method','tiger'], 'required'],
             [['employee_id'], 'integer'],
             [['date', 'created_at', 'updated_at'], 'safe'],
             [['note','payment_method'], 'string', 'max' => 255],
@@ -92,6 +93,8 @@ class SalesEmployees extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         $today=Carbon::now("Asia/Amman");
+
+       
         if (parent::beforeSave($insert)) {
             // Place your custom code here
             if ($this->isNewRecord) {
@@ -108,6 +111,14 @@ class SalesEmployees extends \yii\db\ActiveRecord
     }
 
     public function afterSave($insert, $changedAttributes) {
+
+        // $expenses = new Expenses::find()->where(['sales_employees_id' => $this->id ])->one();
+        // if(is_null($expenses) ){
+          
+        //     $expenses = new Expenses():
+        //     Tiger::TYPE_EXPENSES)
+        // }
+
         parent::afterSave($insert, $changedAttributes);
     }
 }
