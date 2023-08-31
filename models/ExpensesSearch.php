@@ -69,7 +69,8 @@ class ExpensesSearch extends Expenses
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'note', $this->note]);
+            ->andFilterWhere(['like', 'note', $this->note])
+            ->orderBy(['id'=>SORT_DESC]);
 
         return $dataProvider;
     }

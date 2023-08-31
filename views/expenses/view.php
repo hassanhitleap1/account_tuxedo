@@ -31,13 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'type_id',
+            'typeOfExpense.name',
             'employee.name',
             'amount',
             'note:ntext',
             'date',
-            'created_at',
-            'updated_at',
+            // 'created_at',
+            // 'updated_at',
         ],
     ]) ?>
 

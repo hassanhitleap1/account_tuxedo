@@ -32,9 +32,12 @@ use yii\widgets\ActiveForm;
         <div class="col-6">
             <?=  $form->field($model, 'start_date')->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'Enter  date ...'],
+                'language' => 'en',
                 'pluginOptions' => [
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
+                    'format' => 'yyyy-mm-dd',
+                    'pickerPosition' => 'top-right',
+                    
                 ]
             ]);?>
         </div>
