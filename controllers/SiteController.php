@@ -137,7 +137,7 @@ class SiteController extends Controller
         "(select IfNUll(sum(expenses.amount),0) from expenses where expenses.type_id = ".Draws::TYPE_EXPENSES." and month(expenses.date)= $month  and year(expenses.date)=$year ) as amount_draws",
 
 
-        "(select IfNUll(sum(tiger.amount),0) from tiger where tiger.employee_id = ".Employees::tableName().".id  and month(tiger.date)= $month   and year(tiger.date)=$year ) as amount_tiger",
+        "(select IfNUll(sum(sales_employees.tiger),0) from sales_employees where sales_employees.employee_id = ".Employees::tableName().".id  and month(sales_employees.date)= $month   and year(sales_employees.date)=$year ) as amount_tiger",
         
         "(select IfNUll(sum(sales_employees.amount),0) from sales_employees where sales_employees.employee_id = ".Employees::tableName().".id and month(sales_employees.date)= $month   and year(sales_employees.date)=$year) as amount_sales_employees",
         "(select IfNUll(sum(discounts.amount),0) from discounts where discounts.employee_id = ".Employees::tableName().".id  and month(discounts.date)= $month   and year(discounts.date)=$year ) as amount_discount",

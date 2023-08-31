@@ -20,7 +20,6 @@ use Carbon\Carbon;
 class SalesEmployees extends \yii\db\ActiveRecord
 {
 
-    public $tiger;
     /**
      * {@inheritdoc}
      */
@@ -65,9 +64,7 @@ class SalesEmployees extends \yii\db\ActiveRecord
     public function getEmployee(){
         return $this->hasOne(Employees::className(), ['id'=>'employee_id']);
     }
-    public function getSalesEmployee(){
-        return $this->hasOne(Tiger::className(), ['sales_employees_id'=>'id']);
-    }
+
     /**
      * {@inheritdoc}
      * @return SalesEmployeesQuery the active query used by this AR class.
@@ -81,8 +78,7 @@ class SalesEmployees extends \yii\db\ActiveRecord
     public function beforeValidate()
     {
         if (parent::beforeValidate()) {
-            // $this->amount=trim($this->amount);
-            // $this->amount= Calculator::faTOen($this->amount);
+
             return true;
         }
         return false;

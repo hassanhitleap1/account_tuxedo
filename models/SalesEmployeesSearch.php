@@ -17,7 +17,7 @@ class SalesEmployeesSearch extends SalesEmployees
     public function rules()
     {
         return [
-            [['id', 'employee_id'], 'integer'],
+            [['id', 'employee_id','tiger'], 'integer'],
             [['amount'], 'number'],
             [['note', 'date', 'created_at', 'updated_at'], 'safe'],
         ];
@@ -62,6 +62,7 @@ class SalesEmployeesSearch extends SalesEmployees
         $query->andFilterWhere([
             'id' => $this->id,
             'amount' => $this->amount,
+            'tiger'=> $this->tiger,
             'employee_id' => $this->employee_id,
             'date' => $this->date,
             'created_at' => $this->created_at,

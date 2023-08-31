@@ -131,17 +131,15 @@ $this->title = 'tuxedo';
     <tbody>
         <?php foreach($salesEmployees as $key=> $salesEmployee ): ?>
            <?php 
-           $TotalSalesEmployee+= (float)$salesEmployee->amount;
-                if(!is_null($salesEmployee->salesEmployee)){
-                    if(isset($sumTiger[$salesEmployee->employee->id])){
-                        $sumTiger[$salesEmployee->employee->id]['tiger'] += (float) $salesEmployee->salesEmployee->amount;    
+               $TotalSalesEmployee+= (float)$salesEmployee->amount;
+            
+                 if(isset($sumTiger[$salesEmployee->employee->id])){
+                        $sumTiger[$salesEmployee->employee->id]['tiger'] += (float) $salesEmployee->amount;    
                         $sumTiger[$salesEmployee->employee->id]['name'] =  $salesEmployee->employee->name;    
                     }else{
-                        $sumTiger[$salesEmployee->employee->id]['tiger']= (float) $salesEmployee->salesEmployee->amount;
+                        $sumTiger[$salesEmployee->employee->id]['tiger']= (float) $salesEmployee->tiger;
                         $sumTiger[$salesEmployee->employee->id]['name'] =  $salesEmployee->employee->name;   
                     }
-                 
-                }
             ?>
             <tr>
                 <th scope="row"><?=++ $key?></th>
@@ -255,7 +253,7 @@ $this->title = 'tuxedo';
         <tr>
         <th scope="col">#</th>
         <th scope="col"><?=Yii::t('app','Name')?></th>
-        <th scope="col"><?=Yii::t('app','Sum Tiger')?></th>
+        <th scope="col"><?=Yii::t('app','Sum Expenses')?></th>
         </tr>
     </thead>
     <tbody>

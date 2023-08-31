@@ -49,6 +49,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             [
+                'label' => Yii::t('app', 'Tiger'), // Footer label
+                'attribute' => 'tiger',
+                'value' => function ($model) {
+                    return $model->amount;
+                },
+                'footer' =>  $dataProvider->query->sum('tiger'),
+            ],
+
+            [
                 'attribute' => 'employee_id', // Replace with your attribute
                 'filter' => Select2::widget([
                     'model' => $searchModel,

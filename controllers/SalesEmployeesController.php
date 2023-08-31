@@ -71,15 +71,7 @@ class SalesEmployeesController extends Controller
         $model = new SalesEmployees();
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                if(!is_null($model->tiger) && $model->tiger > 0 ){
-                    $tigerModel= new  Tiger();
-                    $tigerModel->employee_id= $model->employee_id;
-                    $tigerModel->amount= $model->tiger;
-                    $tigerModel->date= $model->date;
-                    $tigerModel->note= $model->note;
-                    $tigerModel->sales_employees_id= $model->id;
-                    $tigerModel->save();
-                }
+               
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
