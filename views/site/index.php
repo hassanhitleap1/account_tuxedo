@@ -147,7 +147,7 @@ $this->title = 'tuxedo';
                 <td><?=$salesEmployee->amount?></td>
                 <td><?=$salesEmployee->payment_method ?></td>
                 <td><?=$salesEmployee->note?></td>
-                <td><?= $salesEmployee->salesEmployee->amount??''?></td>
+                <td><?= $salesEmployee->tiger?></td>
             </tr>
         <?php endforeach;?>
         <tfoot>

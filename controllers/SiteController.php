@@ -116,35 +116,35 @@ class SiteController extends Controller
         $expenses_amount_monthly=Expenses::find()->where(['month('.Expenses::tableName().'.date)'=>$month])->sum('amount'); 
        
         
-        
-        // $employees= Employees::find()->select([Employees::tableName().".*",
-        // "(select IfNUll(sum(debt.amount),0) from debt where debt.employee_id = ".Employees::tableName().".id  and month(debt.date)= $month and year(debt.date)=$year )  as amount_debt",
-        // "(select IfNUll(sum(commission.amount),0) from commission where commission.employee_id = ".Employees::tableName().".id  and month(commission.date)= $month  and year(commission.date)=$year )    as amount_commission",
-        // "(select IfNUll(sum(draws.amount),0) from draws where draws.employee_id = ".Employees::tableName().".id  and month(draws.date)= $month  and year(draws.date)=$year ) as amount_draws",
-        // "(select IfNUll(sum(tiger.amount),0) from tiger where tiger.employee_id = ".Employees::tableName().".id  and month(tiger.date)= $month   and year(tiger.date)=$year ) as amount_tiger",
-        // "(select IfNUll(sum(sales_employees.amount),0) from sales_employees where sales_employees.employee_id = ".Employees::tableName().".id and month(sales_employees.date)= $month   and year(sales_employees.date)=$year) as amount_sales_employees",
-        // "(select IfNUll(sum(discounts.amount),0) from discounts where discounts.employee_id = ".Employees::tableName().".id  and month(discounts.date)= $month   and year(discounts.date)=$year ) as amount_discount",
-        // ])->asArray()->all();
-       
 
 
-        $employees= Employees::find()->select([Employees::tableName().".*",
-
-        "(select IfNUll(sum(expenses.amount),0) from expenses where expenses.type_id = ".Debt::TYPE_EXPENSES."  and month(expenses.date)= $month and year(expenses.date)=$year )  as amount_debt",
-
-        "(select IfNUll(sum(expenses.amount),0) from expenses where expenses.type_id = ".Commission::TYPE_EXPENSES."  and month(expenses.date)= $month  and year(expenses.date)=$year )    as amount_commission",
-
-        "(select IfNUll(sum(expenses.amount),0) from expenses where expenses.type_id = ".Draws::TYPE_EXPENSES." and month(expenses.date)= $month  and year(expenses.date)=$year ) as amount_draws",
+        $employees= Employees::find()->asArray()->all();
 
 
-        "(select IfNUll(sum(sales_employees.tiger),0) from sales_employees where sales_employees.employee_id = ".Employees::tableName().".id  and month(sales_employees.date)= $month   and year(sales_employees.date)=$year ) as amount_tiger",
-        
-        "(select IfNUll(sum(sales_employees.amount),0) from sales_employees where sales_employees.employee_id = ".Employees::tableName().".id and month(sales_employees.date)= $month   and year(sales_employees.date)=$year) as amount_sales_employees",
-        "(select IfNUll(sum(discounts.amount),0) from discounts where discounts.employee_id = ".Employees::tableName().".id  and month(discounts.date)= $month   and year(discounts.date)=$year ) as amount_discount",
-        ])->asArray()->all();
+
+        foreach($employees as $key => $employee){
+
+            $employees[$key]['amount_debt'] = Expenses::find()->where(['month(expenses.date)'=> $month ,'employee_id'=>$employee['id'],'year(expenses.date)'=>$year ,'type_id' => Debt::TYPE_EXPENSES ])->sum('amount') ?? 0;
+      
+            $employees[$key]['amount_commission'] = Expenses::find()->where(['month(expenses.date)'=> $month ,'employee_id'=>$employee['id'],'year(expenses.date)'=>$year ,'type_id' => Commission::TYPE_EXPENSES ])->sum('amount')??0;
+          
+            $employees[$key]['amount_draws']= Expenses::find()->where(['month(expenses.date)'=> $month ,'employee_id'=>$employee['id'],'year(expenses.date)'=>$year ,'type_id' => Draws::TYPE_EXPENSES ])->sum('amount')??0;
+            
+    
+            $employees[$key]['amount_sales_employees']= SalesEmployees::find()->where(['month(date)'=> $month ,'employee_id'=>$employee['id'],'year(date)'=>$year ])->sum('amount')??0;
+    
+            $employees[$key]['amount_tiger']= SalesEmployees::find()->where(['month(date)'=> $month ,'employee_id'=>$employee['id'],'year(date)'=>$year ])->sum('tiger')??0;
+            
+            $employees[$key]['amount_discount']= Discounts::find()->where(['month(date)'=> $month ,'employee_id'=>$employee['id'],'year(date)'=>$year ])->sum('amount')??0;
+            
+            
+        }
+
+
 
         $firstDateOfMonth = date('Y-m-01');
        foreach($employees as $key => $employee){
+     
         if($employee['start_date'] > $firstDateOfMonth  ){
             Carbon::parse($employee['start_date'])->day;
             $dayOfEmployee = $day - Carbon::parse($employee['start_date'])->day;
