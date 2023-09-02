@@ -6,11 +6,16 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\grid\GridView;
 use app\models\Discounts;
+use app\models\Employees;
 use yii\grid\ActionColumn;
 use kartik\date\DatePicker;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 /** @var yii\web\View $this */
 /** @var app\models\DiscountsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+
+$employees=ArrayHelper::map(Employees::find()->all(), 'id', 'name');
 
 $this->title = Yii::t('app', 'Discounts');
 $this->params['breadcrumbs'][] = $this->title;
@@ -34,7 +39,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'amount',
-            'employee_id',
+            [
+                'attribute' => 'employee_id', // Replace with your attribute
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'language' => 'en',
+                    'attribute' => 'employee_id', // Replace with your attribute
+                    'data' => $employees,
+                    'options' => ['placeholder' => 'Select a state ...'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]),
+                'value'=> function($model){
+                   return  $model->employee->name;
+                },
+            ],
             'note:ntext',
             [
                 'attribute' => 'date', // Replace with your attribute
