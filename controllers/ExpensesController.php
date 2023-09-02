@@ -2,11 +2,12 @@
 
 namespace app\controllers;
 
-use app\models\Expenses;
-use app\models\ExpensesSearch;
+use Yii;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use app\models\Expenses;
 use yii\filters\VerbFilter;
+use app\models\ExpensesSearch;
+use yii\web\NotFoundHttpException;
 
 /**
  * ExpensesController implements the CRUD actions for Expenses model.
@@ -130,5 +131,27 @@ class ExpensesController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+
+    public function actionCalculationTiger(){
+        if ($this->request->isPost ) {
+            $data =  $this->request->post();
+            $expense =Expenses::find()->where(['date'=>$data['date'],''=>8])->one();
+            if(is_null($expense)){
+                $expense= new Expenses();
+                $expense->name="عمولات";
+                $expense->type_id=8;
+                $expense->date=$data['date'];
+               
+            }else{
+                $expense->name="عمولات";
+                $expense->type_id=8;
+                $expense->date=$data['date']; 
+            }
+            $expense->save();
+
+        }
+      
     }
 }
