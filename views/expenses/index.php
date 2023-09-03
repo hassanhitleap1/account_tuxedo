@@ -122,7 +122,7 @@ echo '</div>';
                     ],
                 ]),
                 'value'=> function($model){
-                   return  $model->employee->name;
+                   return  $model->employee->name??'';
                 },
             ],
 
