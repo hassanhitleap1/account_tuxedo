@@ -57,6 +57,7 @@ class Expenses extends \yii\db\ActiveRecord
             'amount' => Yii::t('app', 'Amount'),
             'note' => Yii::t('app', 'Note'),
             'date' => Yii::t('app', 'Date'),
+            'month' => Yii::t('app', 'Month'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];

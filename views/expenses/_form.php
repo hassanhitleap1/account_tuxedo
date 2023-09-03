@@ -8,15 +8,32 @@ use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\TypesOfExpenses;
+$months = [
+     1 => 1,
+    2 => 2,
+    3 => 3,
+    4 => 4,
+    5 => 5,
+    6 => 6,
+    7 => 7,
+    8 => 8,
+    9 => 9,
+    10 => 10,
+    11 => 11,
+    12 => 12,
+];
+$month=9;
 $today=Carbon::now("Asia/Amman");
 if($model->isNewRecord){
     if($today->hour < 3){
         $date= $today->subDay()->toDateString(); 
+        $month=$today->month;
     }else{
         $date= $today->toDateString();  
     }
 }else{
-    $date= $model->date;  
+    $date= $model->date; 
+    $month=$model->month; 
 }
 
 $employees=ArrayHelper::map(Employees::find()->all(), 'id', 'name');
@@ -32,14 +49,14 @@ $types=ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class="col-6">
-        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'name')->textInput(['maxlength' => true,'id'=>"name"]) ?>
         </div>
         <div class="col-6">
 
         <?= $form->field($model, 'type_id')->widget(Select2::classname(), [
             'data' => $types,
             'language' => 'en',
-            'options' => ['placeholder' => 'Select a state ...'],
+            'options' => ['placeholder' => 'Select a state ...',"id"=>"type_id"],
             'pluginOptions' => [
                 'allowClear' => true
             ],
@@ -47,7 +64,7 @@ $types=ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
         </div>
     </div>
     <div class="row">
-        <div class="col-6">
+        <div class="col-4">
         <?= $form->field($model, 'employee_id')->widget(Select2::classname(), [
             'data' => $employees,
             'language' => 'en',
@@ -58,8 +75,12 @@ $types=ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
             ],
         ]); ?>
         </div>
-        <div class="col-6">
+        <div class="col-4">
         <?= $form->field($model, 'amount')->textInput() ?>
+        </div>
+        <div class="col-4">
+          <?= $form->field($model, 'month')->dropDownList($months, ['prompt' => 'ارجوالتحديد','value'=>$month]);?>
+
         </div>
     </div>
     <div class="row">
@@ -75,21 +96,10 @@ $types=ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
             ]);?>
         </div>
         <div class="col-6">
-        <?= $form->field($model, 'note')->textarea(['rows' => 6]) ?>
+          <?= $form->field($model, 'note')->textarea(['rows' => 6]) ?>
         </div>
+
     </div>
-
-
-    
-
- 
-
-
-
-    
-
-
-
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

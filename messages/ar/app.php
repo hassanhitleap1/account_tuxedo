@@ -317,6 +317,7 @@ return [
    "Monthy"=>"المورقة الشهرية",
    "Time Hour"=>"عدد ساعات العمل ",
    'This employee has registered his shift on this date'=>'هذا الموظف قد تم تسجيل دوامه بهذا التاريخ',
+   'Month'=>"الشهر"
 
 
 
