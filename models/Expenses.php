@@ -35,7 +35,7 @@ class Expenses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'type_id', 'amount'], 'required'],
+            [['name', 'type_id', 'amount','month'], 'required'],
             [['type_id', 'employee_id'], 'integer'],
             [['amount'], 'number'],
             [['note'], 'string'],

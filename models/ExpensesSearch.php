@@ -17,7 +17,7 @@ class ExpensesSearch extends Expenses
     public function rules()
     {
         return [
-            [['id', 'type_id', 'employee_id'], 'integer'],
+            [['id', 'type_id', 'employee_id','month'], 'integer'],
             [['name', 'note', 'date', 'created_at', 'updated_at'], 'safe'],
             [['amount'], 'number'],
         ];

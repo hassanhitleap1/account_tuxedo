@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'amount',
             'note:ntext',
             'date',
+            'month',
             // 'created_at',
             // 'updated_at',
         ],

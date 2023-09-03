@@ -99,6 +99,7 @@ $types=ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
                     ],
                 ]),
             ],
+            'month',
             //'note:ntext',
             //'date',
             //'created_at',
