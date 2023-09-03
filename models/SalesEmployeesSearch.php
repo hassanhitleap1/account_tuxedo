@@ -69,6 +69,14 @@ class SalesEmployeesSearch extends SalesEmployees
             'updated_at' => $this->updated_at,
         ]);
 
+        if(isset($_GET['date_range']) &&  $_GET['date_range']!=''){
+            echo $_GET['date_range'];
+            $dataRange= explode("+",$_GET['date_range']);
+        
+            $query->andWhere(['between', 'date', $dataRange[0], $dataRange[1]]);
+
+        }
+
         $query->andFilterWhere(['like', 'note', $this->note])->orderBy(['id'=>SORT_DESC]);
 
         return $dataProvider;

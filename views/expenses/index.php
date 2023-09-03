@@ -8,9 +8,11 @@ use app\models\Expenses;
 use app\models\Employees;
 use yii\grid\ActionColumn;
 use kartik\date\DatePicker;
+use kartik\form\ActiveForm;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use app\models\TypesOfExpenses;
+use kartik\daterange\DateRangePicker;
 
 /** @var yii\web\View $this */
 /** @var app\models\ExpensesSearch $searchModel */
@@ -20,6 +22,10 @@ $this->title = Yii::t('app', 'Expenses');
 $this->params['breadcrumbs'][] = $this->title;
 $employees=ArrayHelper::map(Employees::find()->all(), 'id', 'name');
 $types=ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
+$date="";
+if(isset($_GET['date_range'])){
+    $date =$_GET['date_range'];
+}
 ?>
 <div class="expenses-index">
 
@@ -28,6 +34,48 @@ $types=ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
     <p>
         <?= Html::a(Yii::t('app', 'Create Expenses'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <?php $form = ActiveForm::begin([
+            'action' => ['expenses/index'],
+            'method' => 'get',
+            'id'=>"form-date"
+            
+        ]); ?>
+<div class="row">
+<div class="col-xl-8 col-lg-8 col-md-8">
+<?php
+$addon = <<< HTML
+<span class="input-group-text">
+    <i class="fas fa-calendar-alt"></i>
+</span>
+HTML;
+echo '<label class="control-label">Date Range</label>';
+echo '<div class="input-group drp-container">';
+echo DateRangePicker::widget([
+    'name'=>'date_range',
+    'language'=>"en",
+    'value'=> $date,
+    'convertFormat'=>true,
+    'useWithAddon'=>true,
+    'pluginOptions'=>[
+        'locale'=>[
+            'format' => 'y-m-d',
+            'separator'=>'+',
+        ],
+        'opens'=>'left'
+    ]
+]) . $addon;
+echo '</div>'; 
+echo '</div>'; 
+
+
+
+?>
+<div class="col-md-4">
+    <button class="btn btn-success"><?=Yii::t('app',"Search")?></button>
+</div>
+
+<?php ActiveForm::end(); ?>
+</div>
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
