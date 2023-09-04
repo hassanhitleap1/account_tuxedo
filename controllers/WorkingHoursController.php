@@ -2,11 +2,12 @@
 
 namespace app\controllers;
 
+use Yii;
+use yii\web\Controller;
+use yii\filters\VerbFilter;
 use app\models\WorkingHours;
 use app\models\WorkingHoursSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * WorkingHoursController implements the CRUD actions for WorkingHours model.
@@ -71,7 +72,18 @@ class WorkingHoursController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+
+                $session = Yii::$app->session;
+                $name=$model->employee->name??"";
+                $session->set('message', Yii::t('app','workingHours',[
+                    $name,
+                    $model->start_time,
+                    $model->end_time,
+                    $model->date        
+                ]));
+                return $this->redirect(['working-hours/create']);
+
+                // return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();

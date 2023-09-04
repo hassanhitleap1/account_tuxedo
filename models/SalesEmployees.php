@@ -36,7 +36,7 @@ class SalesEmployees extends \yii\db\ActiveRecord
     {
         return [
             [['amount','tiger'], 'number'],
-            [['employee_id','payment_method','tiger'], 'required'],
+            [['employee_id','payment_method','tiger','amount'], 'required'],
             [['employee_id'], 'integer'],
             [['date', 'created_at', 'updated_at'], 'safe'],
             [['note','payment_method'], 'string', 'max' => 255],

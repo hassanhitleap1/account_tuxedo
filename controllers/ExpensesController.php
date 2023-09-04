@@ -72,7 +72,18 @@ class ExpensesController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                $session = Yii::$app->session;
+                $name=$model->employee->name??"";
+                $typeOfExpense= $model->typeOfExpense->name??'';
+                $session->set('message', Yii::t('app','expenses_success',[
+                    $typeOfExpense,
+                    $model->amount,
+                    $name,
+                    $model->date,
+                    $model->month        
+                ]));
+                return $this->redirect(['expenses/create']);
+                //return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();

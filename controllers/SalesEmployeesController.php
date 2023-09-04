@@ -2,12 +2,13 @@
 
 namespace app\controllers;
 
-use app\models\SalesEmployees;
-use app\models\SalesEmployeesSearch;
+use Yii;
 use app\models\Tiger;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\SalesEmployees;
+use yii\web\NotFoundHttpException;
+use app\models\SalesEmployeesSearch;
 
 /**
  * SalesEmployeesController implements the CRUD actions for SalesEmployees model.
@@ -71,8 +72,15 @@ class SalesEmployeesController extends Controller
         $model = new SalesEmployees();
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-               
-                return $this->redirect(['view', 'id' => $model->id]);
+                $session = Yii::$app->session;
+                $name=$model->employee->name??"";
+                $session->set('message', Yii::t('app','salesEmployee',[
+                    $model->date,
+                    $name,
+                    $model->amount        
+                ]));
+                return $this->redirect(['sales-employees/create']);
+               // return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();

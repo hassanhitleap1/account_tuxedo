@@ -63,6 +63,7 @@ class ExpensesSearch extends Expenses
             'type_id' => $this->type_id,
             'employee_id' => $this->employee_id,
             'amount' => $this->amount,
+            'month'=>$this->month,
             'date' => $this->date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
