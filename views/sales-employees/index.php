@@ -102,7 +102,7 @@ echo '</div>';
                 'label' => Yii::t('app', 'Tiger'), // Footer label
                 'attribute' => 'tiger',
                 'value' => function ($model) {
-                    return $model->amount;
+                    return $model->tiger;
                 },
                 'footer' =>  $dataProvider->query->sum('tiger'),
             ],

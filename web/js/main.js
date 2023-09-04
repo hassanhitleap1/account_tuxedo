@@ -18,6 +18,51 @@ $(document).on('change','#type_id',function (e) {
         $("#name").val("")   
     }
   
+});
 
+
+$(document).on('click','#insert_tiger',function (e) {
+    let data;
+    let url=`${SITE_URL}/expenses/calculation-tiger`;
+
+     var date=$("#date").val();
+     data={"date":date};
+     if(date==""){
+        alert("ارجو تحديد التاريخ")
+        return ;
+     }
+
+     Swal.fire({
+        title: 'Are you sure?',
+        text: `هل تربد اضاف العمولات على المصاريف بتاريخ ${date}`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes ',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Your code to proceed with the action on 'Yes' goes here
+            $.ajax({
+                url: url,
+                type: 'post',
+                dataType: 'json',
+                data: data
+            }).done(function(response) {
+                console.log(response.success)
+                if(response.success){
+                    Swal.fire('Confirmed!', 'The action was successfully completed.', 'success');
+                }
+                
+            }).fail(function() {
+                console.log("error");
+            });
+    
+        
+        }
+    });
+
+
+   
+    
 });
 

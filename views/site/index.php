@@ -51,7 +51,7 @@ $this->title = 'tuxedo';
             
 </div>
 <div class="col-md-4">
-    <button class="btn button-sccess"><?=Yii::t('app',"Search")?></button>
+    <button class="btn btn-success"><?=Yii::t('app',"Search")?></button>
 </div>
 
 <?php ActiveForm::end(); ?>
@@ -155,7 +155,7 @@ $this->title = 'tuxedo';
                 <th scope="row"></th>
                 <td><?= Yii::t('app','Total')?></td>
                 <td><?=$TotalSalesEmployee?></td>
-                <td></td>
+                <td> </td>
                 <td></td>
                 <td></td>
             </tr>
@@ -163,6 +163,8 @@ $this->title = 'tuxedo';
     
     </tbody>
     </table>
+
+    
     </div>
     
     <div class="col-md-4">
@@ -183,7 +185,17 @@ $this->title = 'tuxedo';
                 <td><?=$value['tiger']?></td>
             </tr>
         <?php endforeach;?>
+
+         <tfoot>
+            <tr>
+                <th scope="row"><button class="btn btn-success" id="insert_tiger"><?=Yii::t('app',"insert_tiger")?></button></th>
+                <td></td>
+        
+            </tr>
+          </tfoot>
+    
     </tbody>
+    
     </table>
 
     </div>

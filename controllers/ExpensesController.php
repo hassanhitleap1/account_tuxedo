@@ -7,6 +7,8 @@ use yii\web\Controller;
 use app\models\Expenses;
 use yii\filters\VerbFilter;
 use app\models\ExpensesSearch;
+use app\models\SalesEmployees;
+use Carbon\Carbon;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -148,20 +150,22 @@ class ExpensesController extends Controller
     public function actionCalculationTiger(){
         if ($this->request->isPost ) {
             $data =  $this->request->post();
-            $expense =Expenses::find()->where(['date'=>$data['date'],''=>8])->one();
+            $date=Carbon::parse($data['date']);
+            $expense =Expenses::find()->where(['date'=> $date->toDateString(),'type_id'=>8])->one();
+           
             if(is_null($expense)){
                 $expense= new Expenses();
                 $expense->name="عمولات";
                 $expense->type_id=8;
+                $expense->month=$date->month;
                 $expense->date=$data['date'];
+                $expense->amount=SalesEmployees::find()->where(['date'=>$date->toDateString()])->sum('tiger');
+                $expense->save();
                
-            }else{
-                $expense->name="عمولات";
-                $expense->type_id=8;
-                $expense->date=$data['date']; 
             }
-            $expense->save();
-
+           
+            return $this->asJson(["success"=>1]);
+        
         }
       
     }
