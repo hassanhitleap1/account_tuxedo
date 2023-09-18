@@ -8,6 +8,7 @@ $sumTiger=[];
 $sumExpenses=[];
 $TotalSalesEmployee=0;
 $totalExpenses=0;
+$totalSalesTiger=0;
 /** @var yii\web\View $this */
 
 $this->title = 'tuxedo';
@@ -58,7 +59,7 @@ $this->title = 'tuxedo';
 </div>
 <div class="row">
     <div class="row mt-4">
-        <div class="col-xl-6 col-lg-6">
+        <div class="col-xl-8 col-lg-8">
             <div class="card l-bg-cherry">
                 <div class="card-statistic-3 p-4">
                     <div class="card-icon card-icon-large"><i class="fas fa-shopping-cart"></i></div>
@@ -66,16 +67,20 @@ $this->title = 'tuxedo';
                         <h5 class="card-title mb-0"><?=Yii::t('app','Total Sales')?> (<?=$date?>)</h5>
                     </div>
                     <div class="row align-items-center mb-2 d-flex">
-                        <div class="col-4">
+                        <div class="col-3">
                             <h2 class="d-flex align-items-center mb-0">
                                $ <?= $sales_amount_daily?>
                             </h2>
                         </div>
-                        <div class="col-4 text-right">
+                        <div class="col-3 text-right">
                             <span> visa <i class="fa fa-arrow-up"> <?=$sales_amount_daily_visa?></i></span>
                         </div>
-                        <div class="col-4 text-right">
+                        <div class="col-3 text-right">
                             <span> cash <i class="fa fa-arrow-up"> <?=$sales_amount_daily_cash?></i></span>
+                        </div>
+
+                        <div class="col-3 text-right">
+                            <span>  صافي النقد</i> <i class="fa fa-arrow-up"> <?=$sales_amount_daily_cash -  $expenses_daily?></i></span>
                         </div>
                     </div>
                     <div class="progress mt-1 " data-height="8" style="height: 8px;">
@@ -85,7 +90,7 @@ $this->title = 'tuxedo';
             </div>
         </div>
     
-        <div class="col-xl-6 col-lg-6">
+        <div class="col-xl-4 col-lg-4">
             <div class="card l-bg-green-dark">
                 <div class="card-statistic-3 p-4">
                     <div class="card-icon card-icon-large"><i class="fas fa-ticket-alt"></i></div>
@@ -102,7 +107,7 @@ $this->title = 'tuxedo';
                             <!-- <span>10% <i class="fa fa-arrow-up"></i></span> -->
                         </div>
                     </div>
-                    <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                    <div class="progress mt-1" data-height="8" style="height: 8px;">
                         <div class="progress-bar l-bg-orange" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
                     </div>
                 </div>
@@ -115,7 +120,7 @@ $this->title = 'tuxedo';
 </div>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
     <h3> <?= Yii::t('app','Sales')?></h3>
     <table class="table">
     <thead>
@@ -132,14 +137,8 @@ $this->title = 'tuxedo';
         <?php foreach($salesEmployees as $key=> $salesEmployee ): ?>
            <?php 
                $TotalSalesEmployee+= (float)$salesEmployee->amount;
+               $totalSalesTiger+= (float)$salesEmployee->tiger;
             
-                 if(isset($sumTiger[$salesEmployee->employee->id])){
-                        $sumTiger[$salesEmployee->employee->id]['tiger'] += (float) $salesEmployee->amount;    
-                        $sumTiger[$salesEmployee->employee->id]['name'] =  $salesEmployee->employee->name;    
-                    }else{
-                        $sumTiger[$salesEmployee->employee->id]['tiger']= (float) $salesEmployee->tiger;
-                        $sumTiger[$salesEmployee->employee->id]['name'] =  $salesEmployee->employee->name;   
-                    }
             ?>
             <tr>
                 <th scope="row"><?=++ $key?></th>
@@ -156,54 +155,24 @@ $this->title = 'tuxedo';
                 <td><?= Yii::t('app','Total')?></td>
                 <td><?=$TotalSalesEmployee?></td>
                 <td> </td>
-                <td></td>
-                <td></td>
-            </tr>
-          </tfoot>
-    
-    </tbody>
-    </table>
-
-    
-    </div>
-    
-    <div class="col-md-4">
-    <h3> <?= Yii::t('app','Sum Tiger')?></h3>
-    <table class="table">
-    <thead>
-        <tr>
-        <th scope="col">#</th>
-        <th scope="col"><?=Yii::t('app','Name')?></th>
-        <th scope="col"><?=Yii::t('app','Sum Tiger')?></th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php foreach($sumTiger as $keySumTiger => $value ): ?>
-            <tr>
-                <th scope="row"><?=++ $keySumTiger?></th>
-                <td><?=$value['name']?></td>
-                <td><?=$value['tiger']?></td>
-            </tr>
-        <?php endforeach;?>
-
-         <tfoot>
-            <tr>
                 <th scope="row"><button class="btn btn-success" id="insert_tiger"><?=Yii::t('app',"insert_tiger")?></button></th>
-                <td></td>
-        
+                <td><?=$totalSalesTiger?></td>
+                
             </tr>
           </tfoot>
     
     </tbody>
-    
     </table>
 
+    
     </div>
+    
+ 
 </div>
   
 <hr/>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
     <h3> <?= Yii::t('app','Expenses')?></h3>
     <table class="table">
     <thead>
@@ -258,28 +227,7 @@ $this->title = 'tuxedo';
 
     
     </div>
-    <div class="col-md-4">
-    <h3> <?= Yii::t('app','Sum Expenses')?></h3>
-    <table class="table">
-    <thead>
-        <tr>
-        <th scope="col">#</th>
-        <th scope="col"><?=Yii::t('app','Name')?></th>
-        <th scope="col"><?=Yii::t('app','Sum Expenses')?></th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php foreach($sumExpenses as $keySumExpenses => $value ): ?>
-            <tr>
-                <th scope="row"><?=++ $keySumExpenses?></th>
-                <td><?=$value['name']?></td>
-                <td><?=$value['expense']?></td>
-            </tr>
-        <?php endforeach;?>
-    </tbody>
-    </table>
 
-    </div>
   
 </div>
 
