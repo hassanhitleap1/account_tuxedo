@@ -72,13 +72,14 @@ class WorkingHours extends \yii\db\ActiveRecord
     public function validateDate($attribute)
     {
    
-        $workingHours = self::find()->where(['date'=>$this->$attribute,'employee_id'=>$this->employee_id])->all();
-        if(!$this->isNewRecord){
-
+       
+        if($this->isNewRecord){
+            $workingHours = self::find()->where(['date'=>$this->$attribute,'employee_id'=>$this->employee_id])->all();
+            if(count($workingHours)){
+                $this->addError($attribute, Yii::t('app','This employee has registered his shift on this date'));
+            }
         }
-        if(count($workingHours)){
-            $this->addError($attribute, Yii::t('app','This employee has registered his shift on this date'));
-        }
+       
 
        
     }
