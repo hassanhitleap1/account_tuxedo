@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\db\Query;
 use Carbon\Carbon;
 use app\models\Debt;
 use app\models\Draws;
@@ -185,6 +186,7 @@ class SiteController extends Controller
     public function actionEmployeeDetails($id){
 
         $now = Carbon::now();
+        $query = new Query();
         $year =$now->year; // Get the current year
         $month = Yii::$app->getRequest()->getQueryParam('month', $now->month);// August
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
@@ -192,40 +194,31 @@ class SiteController extends Controller
 
 
         $model= Employees::findOne($id);
-        $workingHours=WorkingHours::find()->where(['month('.WorkingHours::tableName().'.date)'=>$month])->all();
-        $debts= Debt::find()->select(['sum(amount) as sum_debt','date'])
-        ->where(['month('.Debt::tableName().'.date)'=>$month])
-        ->groupBy(Debt::tableName().'.date')
-        ->orderBy([Debt::tableName().'.date' => SORT_ASC])
-        ->asArray()
-        ->all();
+        $workingHours=WorkingHours::find()->where(['month('.WorkingHours::tableName().'.date)'=>$month])->all();        
+      
 
-       
-        $commissions= Commission::find()
-        ->select(['sum(amount) as sum_commission','date'])
-        ->where(['month('.Commission::tableName().'.date)'=>$month])
-        ->groupBy(Commission::tableName().'.date')
-        ->orderBy([Commission::tableName().'.date' => SORT_ASC])
-        ->asArray()
-        ->orderBy(['date' => SORT_ASC])
-        ->all();
+        $expenses =$query->select([
+            'SUM(CASE WHEN type_id='.Debt::TYPE_EXPENSES.' THEN amount ELSE 0 END) AS sum_debt',
+            'SUM(CASE WHEN type_id='.Commission::TYPE_EXPENSES.' THEN amount ELSE 0 END) AS sum_commission',
+            'SUM(CASE WHEN type_id='.Draws::TYPE_EXPENSES.' THEN amount ELSE 0 END) AS sum_draws',
+            'expenses.date',
+            ])->from('expenses')
+            ->where(['expenses.employee_id'=>$id,'month(expenses.date)'=>$month])
+            ->groupBy('expenses.date')
+            ->orderBy(['expenses.date' => SORT_ASC])
+            // ->asArray()
+            ->all();
+
         
-       
-        $draws= Draws::find()
-        ->select(['sum(amount) as sum_draw','date'])
-        ->where(['month('.Draws::tableName().'.date)'=>$month])
-        ->groupBy(Draws::tableName().'.date')
-        ->orderBy([Draws::tableName().'.date' => SORT_ASC])
+
+        $sales =SalesEmployees::find()->select(['sum(tiger) as sum_tiger', 'sum(amount) as sum_sales', 'date'])
+        ->where(['sales_employees.employee_id'=>$id,'month(sales_employees.date)'=>$month])
+        ->groupBy('sales_employees.date')
+        ->orderBy(['sales_employees.date' => SORT_ASC])
         ->asArray()
         ->all();
 
-        $tigers= Tiger::find()
-        ->select(['sum(amount) as sum_tiger','date'])
-        ->where(['month('.Tiger::tableName().'.date)'=>$month])
-        ->groupBy(Tiger::tableName().'.date')
-        ->orderBy([Tiger::tableName().'.date' => SORT_ASC])
-        ->asArray()
-        ->all();
+
 
         $discounts= Discounts::find()
         ->select(['sum(amount) as sum_discount','date'])
@@ -236,20 +229,16 @@ class SiteController extends Controller
         ->all();
 
         
-        
-
 
         return $this->render('employee-details', [
             'model' => $model,
             'workingHours'=>$workingHours,
-             'commissions'=>$commissions,
-             'draws'=>$draws,
-             'tigers'=>$tigers,
-            'debts'=>$debts,
             'discounts'=>$discounts,
             'datesInAugust'=>$datesInAugust,
             'month'=>$month,
-            'year'=>$year
+            'year'=>$year,
+            'sales'=>$sales,
+            'expenses'=>$expenses
 
         ]);
     }

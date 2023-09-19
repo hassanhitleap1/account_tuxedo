@@ -10,6 +10,12 @@ $this->title = $model->name;
 
 
 
+$sum_debts=0;
+$sum_commissions=0;
+$sum_discounts=0;
+$sum_tigers=0;
+$sum_draws=0;
+$sum_sales=0;
 
 
 ?>
@@ -58,6 +64,8 @@ $this->title = $model->name;
       <th scope="col"><?= Yii::t('app','Commission')?></th>
       <th scope="col"><?= Yii::t('app','Tiger')?></th>
       <th scope="col"><?= Yii::t('app','Discounts')?></th>
+      <th scope="col"><?= Yii::t('app','Sum Sales')?></th>
+
     </tr>
   </thead>
   <tbody>
@@ -71,44 +79,51 @@ $this->title = $model->name;
       $sum_commission=0;
       $sum_discount=0;
       $sum_tiger=0;
-      $sum_draw=0;
+      $sum_draw=0;   
+      $sum_sale=0;
+  
       foreach($workingHours as $workingHour){
         if($workingHour->date == $formattedDate){
-          $start_time =  $workingHour->start_time;
-          $end_time=$workingHour->end_time;
-          break;
-        }
-      }
-      foreach($debts as $debt){
-        if($debt['date'] == $formattedDate){
-          $sum_debt =  $debt['sum_debt'];
-          break;
-        }
-      }
-      foreach($commissions as $commission){
-        if($commission['date'] == $formattedDate){
-          $sum_commission =  $commission['sum_commission'];
+            $start_time =  $workingHour->start_time;
+            $end_time = $workingHour->end_time;
           break;
         }
       }
 
-      foreach($draws as $draw){
-        if($draw['date'] == $formattedDate){
-          $sum_draw =  $draw['sum_draw'];
+
+
+      foreach($expenses as $expense){
+        if($expense['date'] == $formattedDate){
+
+          $sum_debt =  $expense['sum_debt'];
+          $sum_commission=$expense['sum_commission'];
+          $sum_draw=$expense['sum_draws'];
+
+          $sum_debts+=(float)+$sum_debt;
+          $sum_commissions+=(float)+$sum_commission;
+          $sum_draws+=(float)+$sum_draw;
+         
           break;
         }
       }
+
+
+  
 
       foreach($discounts as $discount){
         if($discount['date'] == $formattedDate){
           $sum_discount=  $discount['sum_discount'];
+          $sum_discounts+=(float)+$sum_discount;
           break;
         }
       }
 
-      foreach($tigers as $tiger){
-        if($tiger['date'] == $formattedDate){
-          $sum_tiger=  $tiger['sum_tiger'];
+      foreach($sales as $sale){
+        if($sale['date'] == $formattedDate){
+          $sum_tiger=  $sale['sum_tiger'];
+          $sum_sale=  $sale['sum_sales'];
+          $sum_sales+=(float)+$sum_sale;
+          $sum_tigers+=(float)+$sum_tiger;
           break;
         }
       }
@@ -117,6 +132,9 @@ $this->title = $model->name;
       foreach($discounts as $discount){
         if($discount['date'] == $formattedDate){
           $sum_discount=  $discount['sum_discount'];
+
+          $sum_discounts+=(float)+$sum_discount;
+          
           break;
         }
       }
@@ -137,13 +155,28 @@ $this->title = $model->name;
         <td><?= $sum_commission?></td>
         <td><?= $sum_tiger?></td>
         <td><?= $sum_discount?></td>
-
-        
+        <td><?= $sum_sale?></td>
       </tr>
 
     <?php endforeach;?>
    
-   
+    <tfoot>
+            <tr>
+              <th scope="row"></th>
+              <td><?= Yii::t('app','Total')?></td>
+              <td></td>
+              <td> </td>
+              <th ></th>
+              <td><?= $sum_draws?></td>
+              <td><?= $sum_debts?></td>
+              <td><?= $sum_commissions?></td>
+              <td><?= $sum_tigers?></td>
+              <td><?= $sum_discounts?></td>
+              <td><?= $sum_sales?></td>
+                
+            </tr>
+    </tfoot>
+
   </tbody>
 </table>
 
