@@ -21,6 +21,7 @@ use yii\filters\VerbFilter;
 use app\models\WorkingHours;
 use app\models\SalesEmployees;
 use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 
 class SiteController extends Controller
 {
@@ -73,6 +74,18 @@ class SiteController extends Controller
      */
 
      public function actionIndex(){
+
+       
+    
+        if (Yii::$app->user->isGuest) {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+         
+        }   
+        if (Yii::$app->user->identity->type != User::SUPER_ADMIN) {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));     
+        }
+
+
         $today=Carbon::now("Asia/Amman");
 
         $date=$today->toDateString();
@@ -102,6 +115,15 @@ class SiteController extends Controller
         }
     public function actionMonthy()
     {
+
+        if (Yii::$app->user->isGuest) {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+         
+        }   
+        if (Yii::$app->user->identity->type != User::SUPER_ADMIN) {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));     
+        }
+        
         $now = Carbon::now();
         $year= $now->year;
         $month= Yii::$app->getRequest()->getQueryParam('month', $now->month);
@@ -185,6 +207,13 @@ class SiteController extends Controller
 
     public function actionEmployeeDetails($id){
 
+        if (!Yii::$app->user->isGuest) {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }if (Yii::$app->user->identity->type != User::USER) {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.')); 
+        }
+        
+        
         $now = Carbon::now();
         $query = new Query();
         $year =$now->year; // Get the current year
@@ -242,6 +271,73 @@ class SiteController extends Controller
 
         ]);
     }
+
+
+    public function actionDetails(){
+
+       if (Yii::$app->user->identity->type != User::USER) {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.')); 
+        }
+    
+        $id= Yii::$app->user->identity->employee_id;
+        $now = Carbon::now();
+        $query = new Query();
+        $year =$now->year; // Get the current year
+        $month = Yii::$app->getRequest()->getQueryParam('month', $now->month);// August
+        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $datesInAugust = range(1, $daysInMonth);
+
+
+        $model= Employees::findOne($id);
+        $workingHours=WorkingHours::find()->where(['month('.WorkingHours::tableName().'.date)'=>$month])->all();        
+      
+
+        $expenses =$query->select([
+            'SUM(CASE WHEN type_id='.Debt::TYPE_EXPENSES.' THEN amount ELSE 0 END) AS sum_debt',
+            'SUM(CASE WHEN type_id='.Commission::TYPE_EXPENSES.' THEN amount ELSE 0 END) AS sum_commission',
+            'SUM(CASE WHEN type_id='.Draws::TYPE_EXPENSES.' THEN amount ELSE 0 END) AS sum_draws',
+            'expenses.date',
+            ])->from('expenses')
+            ->where(['expenses.employee_id'=>$id,'month(expenses.date)'=>$month])
+            ->groupBy('expenses.date')
+            ->orderBy(['expenses.date' => SORT_ASC])
+            // ->asArray()
+            ->all();
+
+        
+
+        $sales =SalesEmployees::find()->select(['sum(tiger) as sum_tiger', 'sum(amount) as sum_sales', 'date'])
+        ->where(['sales_employees.employee_id'=>$id,'month(sales_employees.date)'=>$month])
+        ->groupBy('sales_employees.date')
+        ->orderBy(['sales_employees.date' => SORT_ASC])
+        ->asArray()
+        ->all();
+
+
+
+        $discounts= Discounts::find()
+        ->select(['sum(amount) as sum_discount','date'])
+        ->where(['month('.Discounts::tableName().'.date)'=>$month])
+        ->groupBy(Discounts::tableName().'.date')
+        ->orderBy([Discounts::tableName().'.date' => SORT_ASC])
+        ->asArray()
+        ->all();
+
+        
+
+        return $this->render('employee-details', [
+            'model' => $model,
+            'workingHours'=>$workingHours,
+            'discounts'=>$discounts,
+            'datesInAugust'=>$datesInAugust,
+            'month'=>$month,
+            'year'=>$year,
+            'sales'=>$sales,
+            'expenses'=>$expenses
+
+        ]);
+    }
+
     /**
      * Logout action.
      *

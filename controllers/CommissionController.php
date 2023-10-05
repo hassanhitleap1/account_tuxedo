@@ -2,17 +2,32 @@
 
 namespace app\controllers;
 
-use app\models\Commission;
-use app\models\CommissionSearch;
+use Yii;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use app\models\Commission;
 use yii\filters\VerbFilter;
+use app\models\CommissionSearch;
+use yii\web\NotFoundHttpException;
+use app\models\User;
 
 /**
  * CommissionController implements the CRUD actions for Commission model.
  */
 class CommissionController extends Controller
 {
+
+
+    public function init()
+    {
+        if (!Yii::$app->user->isGuest) {
+           
+            if (Yii::$app->user->identity->type != User::SUPER_ADMIN) {
+                throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+            }
+        }
+        parent::init();
+    }
+    
     /**
      * @inheritDoc
      */

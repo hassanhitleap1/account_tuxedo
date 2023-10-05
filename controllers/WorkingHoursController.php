@@ -14,6 +14,19 @@ use yii\web\NotFoundHttpException;
  */
 class WorkingHoursController extends Controller
 {
+
+
+    public function init()
+    {
+        if (!Yii::$app->user->isGuest) {
+            if (Yii::$app->user->identity->type != User::SUPER_ADMIN) {
+                throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+            }
+        }
+        parent::init();
+    }
+
+    
     /**
      * @inheritDoc
      */
@@ -142,5 +155,19 @@ class WorkingHoursController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+
+
+    public function actionEnter(){
+
+        $command= "ipconfig getifaddr en0";
+        $localSSID = exec ($command);
+        echo $localSSID;
+        $command= "ipconfig getifaddr en0";
+        $localSSID = exec ($command);
+        echo $localSSID;
+        exit;
+
     }
 }
