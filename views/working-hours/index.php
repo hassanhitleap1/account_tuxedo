@@ -11,17 +11,20 @@ use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use app\models\WorkingHours;
 use yii\helpers\ArrayHelper;
+
 /** @var yii\web\View $this */
 /** @var app\models\WorkingHoursSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
-$employees=ArrayHelper::map(Employees::find()->all(), 'id', 'name');
+$employees = ArrayHelper::map(Employees::find()->all(), 'id', 'name');
 
 $this->title = Yii::t('app', 'Working Hours');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="working-hours-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>
+        <?= Html::encode($this->title) ?>
+    </h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create Working Hours'), ['create'], ['class' => 'btn btn-success']) ?>
@@ -37,27 +40,27 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-          
+
             [
-                'attribute' => 'employee_id', // Replace with your attribute
+                'attribute' => 'user_id', // Replace with your attribute
                 'filter' => Select2::widget([
                     'model' => $searchModel,
                     'language' => 'en',
-                    'attribute' => 'employee_id', // Replace with your attribute
+                    'attribute' => 'user_id', // Replace with your attribute
                     'data' => $employees,
                     'options' => ['placeholder' => 'Select a state ...'],
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
                 ]),
-                'value'=> function($model){
-                   return  $model->employee->name??'';
-                },
+                'value' => function ($model) {
+                        return $model->employee->name ?? '';
+                    },
             ],
             'start_time',
             'end_time',
             // 'note:ntext',
-     
+    
             [
                 'attribute' => 'date', // Replace with your attribute
                 'filter' => DatePicker::widget([
@@ -76,8 +79,8 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, WorkingHours $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                        return Url::toRoute([$action, 'id' => $model->id]);
+                    }
             ],
         ],
     ]); ?>

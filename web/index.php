@@ -10,3 +10,10 @@ require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
 $config = require __DIR__ . '/../config/web.php';
 
 (new yii\web\Application($config))->run();
+
+function dd($params)
+{
+    var_dump($params);
+    exit;
+
+}

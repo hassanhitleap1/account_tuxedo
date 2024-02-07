@@ -21,9 +21,9 @@ class m230822_195621_create_table_working_hours extends Migration
 
         $this->createTable('{{%working_hours}}', [
             'id' => $this->primaryKey(),
-            'employee_id'=>$this->integer()->notNull(),
-            'start_time'=>$this->time()->null(),
-            'end_time'=>$this->time()->null(),
+            'user_id' => $this->integer()->notNull(),
+            'start_time' => $this->time()->null(),
+            'end_time' => $this->time()->null(),
             'note' => $this->text()->null(),
             'date' => $this->date()->notNull()->defaultValue(null),
             'created_at' => $this->dateTime()->notNull()->defaultValue(null),

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Carbon\Carbon;
 use Yii;
 use app\models\Tiger;
 use yii\web\Controller;
@@ -9,13 +10,15 @@ use yii\filters\VerbFilter;
 use app\models\SalesEmployees;
 use yii\web\NotFoundHttpException;
 use app\models\SalesEmployeesSearch;
+use app\models\User;
+
 
 /**
  * SalesEmployeesController implements the CRUD actions for SalesEmployees model.
  */
 class SalesEmployeesController extends Controller
 {
-    
+
     public function init()
     {
         if (!Yii::$app->user->isGuest) {
@@ -25,7 +28,7 @@ class SalesEmployeesController extends Controller
         }
         parent::init();
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -84,14 +87,15 @@ class SalesEmployeesController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 $session = Yii::$app->session;
-                $name=$model->employee->name??"";
-                $session->set('message', Yii::t('app','salesEmployee',[
+                $name = $model->employee->name ?? "";
+                $session->set('message', Yii::t('app', 'salesEmployee', [
                     $model->date,
                     $name,
-                    $model->amount        
+                    $model->amount
                 ]));
+                $session->set('date', $model->date);
                 return $this->redirect(['sales-employees/create']);
-               // return $this->redirect(['view', 'id' => $model->id]);
+                // return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -149,5 +153,58 @@ class SalesEmployeesController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function actionCalculation()
+    {
+
+
+        if ($this->request->isPost) {
+            $data = $this->request->post();
+            $date = Carbon::parse($data['date']);
+            $amount = Carbon::parse($data['value']);
+
+            $salesEmployees = SalesEmployees::find()->where(['date' => $date->toDateString()])->orderBy('amount', SORT_DESC)->all();
+
+            if (count($salesEmployees)) {
+                foreach ($salesEmployees as $salesEmployee) {
+                    if ($salesEmployee->amount >= $amount) {
+                        $newAmount = $salesEmployee->amount - $amount;
+                        if ($newAmount == 0) {
+                            $salesEmployee->payment_method = 'visa';
+                            $salesEmployee->save();
+                            return $this->asJson(["success" => 1]);
+                        } else {
+                            $model = new SalesEmployees();
+                            $model->user_id = $salesEmployee->user_id;
+                            $model->tiger = 0;
+                            $model->payment_method = "visa";
+                            $model->date = $date;
+                            $model->amount = $amount;
+                            $model->save();
+                            $salesEmployee->amount = $newAmount;
+                            $salesEmployee->save();
+                            return $this->asJson(["success" => 1]);
+
+                        }
+
+                    } else {
+                        $newAmount = $amount - $salesEmployee->amount;
+                        if ($newAmount < 0) {
+
+                        } elseif ($newAmount == 0) {
+
+                        } else {
+
+                        }
+                    }
+                }
+
+            }
+
+            return $this->asJson(["success" => 1]);
+
+        }
+
     }
 }

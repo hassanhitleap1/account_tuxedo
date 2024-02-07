@@ -7,6 +7,8 @@ use app\models\TigerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\User;
+use Yii;
 
 /**
  * TigerController implements the CRUD actions for Tiger model.
@@ -24,7 +26,7 @@ class TigerController extends Controller
         }
         parent::init();
     }
-    
+
     /**
      * @inheritDoc
      */

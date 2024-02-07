@@ -21,8 +21,8 @@ class m230816_010116_create_draws extends Migration
 
         $this->createTable('{{%draws}}', [
             'id' => $this->primaryKey(),
-            'amount'=>$this->double()->notNull()->defaultValue(0),
-            'employee_id'=>$this->integer()->notNull(),
+            'amount' => $this->double()->notNull()->defaultValue(0),
+            'user_id' => $this->integer()->notNull(),
             'note' => $this->text()->null(),
             'date' => $this->date()->notNull()->defaultValue(null),
             'created_at' => $this->dateTime()->notNull()->defaultValue(null),

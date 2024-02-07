@@ -17,7 +17,7 @@ class WorkingHoursSearch extends WorkingHours
     public function rules()
     {
         return [
-            [['id', 'employee_id'], 'integer'],
+            [['id', 'user_id'], 'integer'],
             [['start_time', 'end_time', 'note', 'date', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -59,7 +59,7 @@ class WorkingHoursSearch extends WorkingHours
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'employee_id' => $this->employee_id,
+            'user_id' => $this->user_id,
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
             'date' => $this->date,

@@ -1,21 +1,36 @@
 <?php
 
 namespace app\models;
+
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
-class User extends  ActiveRecord implements IdentityInterface
+class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
-    const SUPER_ADMIN=1;
-    const USER=2;
-    const DATA_ENTERY=3;
+    const SUPER_ADMIN = 1;
+    const USER = 2;
+    const DATA_ENTERY = 3;
 
+
+
+    // public function behaviors()
+    // {
+    //     return [
+    //         TimestampBehavior::className(),
+    //     ];
+    // }
+
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return static::findOne(['access_token' => $token]);
+    }
 
     /**
      * {@inheritdoc}
@@ -54,13 +69,7 @@ class User extends  ActiveRecord implements IdentityInterface
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
-    }
+
 
     /**
      * Finds user by username
@@ -70,8 +79,17 @@ class User extends  ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['phone' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
     }
+
+    public static function findByUsernameOrPhone($username)
+    {
+
+        return static::find()->orWhere(['phone' => $username, 'status' => self::STATUS_ACTIVE])
+            ->orWhere(['username' => $username, 'status' => self::STATUS_ACTIVE])->one();
+
+    }
+
 
     /**
      * Finds user by password reset token
@@ -81,6 +99,7 @@ class User extends  ActiveRecord implements IdentityInterface
      */
     public static function findByPasswordResetToken($token)
     {
+
         if (!static::isPasswordResetTokenValid($token)) {
             return null;
         }
@@ -97,7 +116,8 @@ class User extends  ActiveRecord implements IdentityInterface
      * @param string $token verify email token
      * @return static|null
      */
-    public static function findByVerificationToken($token) {
+    public static function findByVerificationToken($token)
+    {
         return static::findOne([
             'verification_token' => $token,
             'status' => self::STATUS_INACTIVE

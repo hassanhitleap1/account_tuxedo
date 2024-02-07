@@ -17,7 +17,7 @@ class SalesEmployeesSearch extends SalesEmployees
     public function rules()
     {
         return [
-            [['id', 'employee_id','tiger'], 'integer'],
+            [['id', 'user_id', 'tiger'], 'integer'],
             [['amount'], 'number'],
             [['note', 'date', 'created_at', 'updated_at'], 'safe'],
         ];
@@ -57,27 +57,27 @@ class SalesEmployeesSearch extends SalesEmployees
             return $dataProvider;
         }
 
-      
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'amount' => $this->amount,
-            'tiger'=> $this->tiger,
-            'employee_id' => $this->employee_id,
+            'tiger' => $this->tiger,
+            'user_id' => $this->user_id,
             'date' => $this->date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        if(isset($_GET['date_range']) &&  $_GET['date_range']!=''){
+        if (isset($_GET['date_range']) && $_GET['date_range'] != '') {
             echo $_GET['date_range'];
-            $dataRange= explode("+",$_GET['date_range']);
-        
+            $dataRange = explode("+", $_GET['date_range']);
+
             $query->andWhere(['between', 'date', $dataRange[0], $dataRange[1]]);
 
         }
 
-        $query->andFilterWhere(['like', 'note', $this->note])->orderBy(['id'=>SORT_DESC]);
+        $query->andFilterWhere(['like', 'note', $this->note])->orderBy(['id' => SORT_DESC]);
 
         return $dataProvider;
     }

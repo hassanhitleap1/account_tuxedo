@@ -10,6 +10,7 @@ use app\models\ExpensesSearch;
 use app\models\SalesEmployees;
 use Carbon\Carbon;
 use yii\web\NotFoundHttpException;
+use app\models\User;
 
 /**
  * ExpensesController implements the CRUD actions for Expenses model.
@@ -27,7 +28,7 @@ class ExpensesController extends Controller
         }
         parent::init();
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -87,15 +88,19 @@ class ExpensesController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 $session = Yii::$app->session;
-                $name=$model->employee->name??"";
-                $typeOfExpense= $model->typeOfExpense->name??'';
-                $session->set('message', Yii::t('app','expenses_success',[
+                $name = $model->employee->name ?? "";
+                $typeOfExpense = $model->typeOfExpense->name ?? '';
+                $session->set('message', Yii::t('app', 'expenses_success', [
                     $typeOfExpense,
                     $model->amount,
                     $name,
                     $model->date,
-                    $model->month        
+                    $model->month
                 ]));
+
+
+                $session->set('date', $model->date);
+
                 return $this->redirect(['expenses/create']);
                 //return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -159,26 +164,27 @@ class ExpensesController extends Controller
     }
 
 
-    public function actionCalculationTiger(){
-        if ($this->request->isPost ) {
-            $data =  $this->request->post();
-            $date=Carbon::parse($data['date']);
-            $expense =Expenses::find()->where(['date'=> $date->toDateString(),'type_id'=>8])->one();
-           
-            if(is_null($expense)){
-                $expense= new Expenses();
-                $expense->name="عمولات";
-                $expense->type_id=8;
-                $expense->month=$date->month;
-                $expense->date=$data['date'];
-                $expense->amount=SalesEmployees::find()->where(['date'=>$date->toDateString()])->sum('tiger');
+    public function actionCalculationTiger()
+    {
+        if ($this->request->isPost) {
+            $data = $this->request->post();
+            $date = Carbon::parse($data['date']);
+            $expense = Expenses::find()->where(['date' => $date->toDateString(), 'type_id' => 8])->one();
+
+            if (is_null($expense)) {
+                $expense = new Expenses();
+                $expense->name = "عمولات";
+                $expense->type_id = 8;
+                $expense->month = $date->month;
+                $expense->date = $data['date'];
+                $expense->amount = SalesEmployees::find()->where(['date' => $date->toDateString()])->sum('tiger');
                 $expense->save();
-               
+
             }
-           
-            return $this->asJson(["success"=>1]);
-        
+
+            return $this->asJson(["success" => 1]);
+
         }
-      
+
     }
 }

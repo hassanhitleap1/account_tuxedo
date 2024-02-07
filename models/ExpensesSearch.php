@@ -17,7 +17,7 @@ class ExpensesSearch extends Expenses
     public function rules()
     {
         return [
-            [['id', 'type_id', 'employee_id','month'], 'integer'],
+            [['id', 'type_id', 'user_id', 'month'], 'integer'],
             [['name', 'note', 'date', 'created_at', 'updated_at'], 'safe'],
             [['amount'], 'number'],
         ];
@@ -61,25 +61,25 @@ class ExpensesSearch extends Expenses
         $query->andFilterWhere([
             'id' => $this->id,
             'type_id' => $this->type_id,
-            'employee_id' => $this->employee_id,
+            'user_id' => $this->user_id,
             'amount' => $this->amount,
-            'month'=>$this->month,
+            'month' => $this->month,
             'date' => $this->date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        if(isset($_GET['date_range']) &&  $_GET['date_range']!=''){
+        if (isset($_GET['date_range']) && $_GET['date_range'] != '') {
             echo $_GET['date_range'];
-            $dataRange= explode("+",$_GET['date_range']);
-        
+            $dataRange = explode("+", $_GET['date_range']);
+
             $query->andWhere(['between', 'date', $dataRange[0], $dataRange[1]]);
 
         }
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'note', $this->note])
-            ->orderBy(['id'=>SORT_DESC]);
+            ->orderBy(['id' => SORT_DESC]);
 
         return $dataProvider;
     }

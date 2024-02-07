@@ -66,3 +66,52 @@ $(document).on('click','#insert_tiger',function (e) {
     
 });
 
+
+$(document).on('click','#visaandcash',function (e) {
+    let data;
+    let url=`${SITE_URL}/sales-employees/calculation`;
+     var date=$("#date").val();
+
+     if(date==""){
+        alert("ارجو تحديد التاريخ")
+        return ;
+     }
+
+
+     Swal.fire({
+        title: 'Enter a Number',
+        input: 'number',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          
+          data={"date":date,"value":result.value};
+          $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            data: data
+        }).done(function(response) {
+            console.log(response.success)
+            if(response.success){
+                Swal.fire('Confirmed!', 'The action was successfully completed.', 'success');
+            }
+            
+        }).fail(function() {
+            console.log("error");
+        });
+
+          Swal.fire('You entered: ' + result.value +" "+ date);
+        }
+      });
+
+
+    
+    
+});
+

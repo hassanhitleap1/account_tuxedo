@@ -17,7 +17,7 @@ class CommissionSearch extends Commission
     public function rules()
     {
         return [
-            [['id', 'employee_id'], 'integer'],
+            [['id', 'user_id'], 'integer'],
             [['amount'], 'number'],
             [['note', 'date', 'created_at', 'updated_at'], 'safe'],
         ];
@@ -61,7 +61,7 @@ class CommissionSearch extends Commission
         $query->andFilterWhere([
             'id' => $this->id,
             'amount' => $this->amount,
-            'employee_id' => $this->employee_id,
+            'user_id' => $this->user_id,
             'date' => $this->date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

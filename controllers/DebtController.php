@@ -7,6 +7,8 @@ use app\models\DebtSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\User;
+use Yii;
 
 /**
  * DebtController implements the CRUD actions for Debt model.
@@ -18,7 +20,7 @@ class DebtController extends Controller
     public function init()
     {
         if (!Yii::$app->user->isGuest) {
-    
+
             if (Yii::$app->user->identity->type != User::SUPER_ADMIN) {
                 throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
             }

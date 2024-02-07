@@ -7,6 +7,8 @@ use app\models\DrawsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\User;
+use Yii;
 
 /**
  * DrawsController implements the CRUD actions for Draws model.

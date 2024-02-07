@@ -7,6 +7,8 @@ use app\models\EmployeesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
+use app\models\User;
 
 /**
  * EmployeesController implements the CRUD actions for Employees model.
@@ -83,6 +85,7 @@ class EmployeesController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

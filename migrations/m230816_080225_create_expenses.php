@@ -22,7 +22,7 @@ class m230816_080225_create_expenses extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull(),
             'type_id' => $this->integer()->notNull(),
-            'employee_id' => $this->integer()->null(),
+            'user_id' => $this->integer()->null(),
             'amount' => $this->double()->notNull(),
             'note' => $this->text()->null(),
             'date' => $this->date()->notNull()->defaultValue(null),
@@ -30,7 +30,7 @@ class m230816_080225_create_expenses extends Migration
             'updated_at' => $this->dateTime()->notNull()->defaultValue(null),
         ], $tableOptions);
 
-        
+
     }
 
     /**

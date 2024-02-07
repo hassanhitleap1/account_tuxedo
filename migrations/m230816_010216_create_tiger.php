@@ -22,11 +22,11 @@ class m230816_010216_create_tiger extends Migration
 
         $this->createTable('{{%tiger}}', [
             'id' => $this->primaryKey(),
-            'amount'=>$this->double()->notNull()->defaultValue(0),
-            'employee_id'=>$this->integer()->notNull(),
+            'amount' => $this->double()->notNull()->defaultValue(0),
+            'user_id' => $this->integer()->notNull(),
             'note' => $this->text()->null(),
             'date' => $this->date()->notNull()->defaultValue(null),
-            'sales_employees_id'=>$this->integer()->null(),
+            'sales_employees_id' => $this->integer()->null(),
             'created_at' => $this->dateTime()->notNull()->defaultValue(null),
             'updated_at' => $this->dateTime()->notNull()->defaultValue(null),
         ], $tableOptions);

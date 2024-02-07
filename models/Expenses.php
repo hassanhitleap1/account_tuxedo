@@ -12,7 +12,7 @@ use app\components\Calculator;
  * @property int $id
  * @property string $name
  * @property int $type_id
- * @property int|null $employee_id
+ * @property int|null $user_id
  * @property float $amount
  * @property string|null $note
  * @property string|null $date
@@ -35,8 +35,8 @@ class Expenses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'type_id', 'amount','month'], 'required'],
-            [['type_id', 'employee_id'], 'integer'],
+            [['name', 'type_id', 'amount', 'month'], 'required'],
+            [['type_id', 'user_id'], 'integer'],
             [['amount'], 'number'],
             [['note'], 'string'],
             [['date', 'created_at', 'updated_at'], 'safe'],
@@ -53,7 +53,7 @@ class Expenses extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
             'type_id' => Yii::t('app', 'Type ID'),
-            'employee_id' => Yii::t('app', 'Employee ID'),
+            'user_id' => Yii::t('app', 'Employee ID'),
             'amount' => Yii::t('app', 'Amount'),
             'note' => Yii::t('app', 'Note'),
             'date' => Yii::t('app', 'Date'),
@@ -91,19 +91,19 @@ class Expenses extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        $today=Carbon::now("Asia/Amman");
+        $today = Carbon::now("Asia/Amman");
 
-        if($this->isNewRecord && !is_null($this->employee_id)){
-            if($this->type_id == Commission::TYPE_EXPENSES){
+        if ($this->isNewRecord && !is_null($this->user_id)) {
+            if ($this->type_id == Commission::TYPE_EXPENSES) {
                 Calculator::addCommission($this);
-            }elseif($this->type_id == Tiger::TYPE_EXPENSES){
+            } elseif ($this->type_id == Tiger::TYPE_EXPENSES) {
                 Calculator::addTiger($this);
-            }elseif($this->type_id == Draws::TYPE_EXPENSES){
+            } elseif ($this->type_id == Draws::TYPE_EXPENSES) {
                 Calculator::addDraws($this);
-            }elseif($this->type_id == Debt::TYPE_EXPENSES){
+            } elseif ($this->type_id == Debt::TYPE_EXPENSES) {
                 Calculator::addDebt($this);
             }
-           
+
         }
 
         if (parent::beforeSave($insert)) {
@@ -112,7 +112,7 @@ class Expenses extends \yii\db\ActiveRecord
                 $this->created_at = $today;
                 $this->updated_at = $today;
             } else {
-                $this->updated_at =$today;
+                $this->updated_at = $today;
             }
 
             return true;
@@ -122,15 +122,18 @@ class Expenses extends \yii\db\ActiveRecord
     }
 
 
-    public function getEmployee(){
-        return $this->hasOne(Employees::className(), ['id'=>'employee_id']);
+    public function getEmployee()
+    {
+        return $this->hasOne(Employees::className(), ['id' => 'user_id']);
     }
 
-    public function getTypeOfExpense(){
-        return $this->hasOne(TypesOfExpenses::className(), ['id'=>'type_id']);
+    public function getTypeOfExpense()
+    {
+        return $this->hasOne(TypesOfExpenses::className(), ['id' => 'type_id']);
     }
-    
-    public function afterSave($insert, $changedAttributes) {
+
+    public function afterSave($insert, $changedAttributes)
+    {
         parent::afterSave($insert, $changedAttributes);
     }
 }

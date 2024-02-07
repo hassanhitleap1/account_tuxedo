@@ -11,7 +11,7 @@ use app\components\Calculator;
  *
  * @property int $id
  * @property float $amount
- * @property int $employee_id
+ * @property int $user_id
  * @property string|null $note
  * @property string $date
  * @property string|null $created_at
@@ -20,7 +20,7 @@ use app\components\Calculator;
 class Debt extends \yii\db\ActiveRecord
 {
 
-    const  TYPE_EXPENSES=3; 
+    const TYPE_EXPENSES = 3;
     /**
      * {@inheritdoc}
      */
@@ -36,8 +36,8 @@ class Debt extends \yii\db\ActiveRecord
     {
         return [
             [['amount'], 'number'],
-            [['employee_id', 'date'], 'required'],
-            [['employee_id'], 'integer'],
+            [['user_id', 'date'], 'required'],
+            [['user_id'], 'integer'],
             [['date', 'created_at', 'updated_at'], 'safe'],
             [['note'], 'string', 'max' => 255],
         ];
@@ -51,7 +51,7 @@ class Debt extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'amount' => Yii::t('app', 'Amount'),
-            'employee_id' => Yii::t('app', 'Employee ID'),
+            'user_id' => Yii::t('app', 'Employee ID'),
             'note' => Yii::t('app', 'Note'),
             'date' => Yii::t('app', 'Date'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -70,8 +70,9 @@ class Debt extends \yii\db\ActiveRecord
         }
         return false;
     }
-    public function getEmployee(){
-        return $this->hasOne(Employees::className(), ['id'=>'employee_id']);
+    public function getEmployee()
+    {
+        return $this->hasOne(Employees::className(), ['id' => 'user_id']);
     }
     /**
      * {@inheritdoc}
@@ -91,14 +92,14 @@ class Debt extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        $today=Carbon::now("Asia/Amman");
+        $today = Carbon::now("Asia/Amman");
         if (parent::beforeSave($insert)) {
             // Place your custom code here
             if ($this->isNewRecord) {
                 $this->created_at = $today;
                 $this->updated_at = $today;
             } else {
-                $this->updated_at =$today;
+                $this->updated_at = $today;
             }
 
             return true;
@@ -107,7 +108,8 @@ class Debt extends \yii\db\ActiveRecord
         }
     }
 
-    public function afterSave($insert, $changedAttributes) {
+    public function afterSave($insert, $changedAttributes)
+    {
         parent::afterSave($insert, $changedAttributes);
     }
 }

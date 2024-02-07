@@ -9,7 +9,7 @@ use Carbon\Carbon;
  * This is the model class for table "{{%working_hours}}".
  *
  * @property int $id
- * @property int $employee_id
+ * @property int $user_id
  * @property string|null $start_time
  * @property string|null $end_time
  * @property string|null $note
@@ -33,8 +33,8 @@ class WorkingHours extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['employee_id','start_time','end_time'], 'required'],
-            [['employee_id'], 'integer'],
+            [['user_id', 'start_time', 'end_time'], 'required'],
+            [['user_id'], 'integer'],
             [['start_time', 'end_time', 'date', 'created_at', 'updated_at'], 'safe'],
             [['note'], 'string'],
             [['date'], 'validateDate'],
@@ -48,7 +48,7 @@ class WorkingHours extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'employee_id' => Yii::t('app', 'Employee ID'),
+            'user_id' => Yii::t('app', 'Employee ID'),
             'start_time' => Yii::t('app', 'Start Time'),
             'end_time' => Yii::t('app', 'End Time'),
             'note' => Yii::t('app', 'Note'),
@@ -71,32 +71,33 @@ class WorkingHours extends \yii\db\ActiveRecord
 
     public function validateDate($attribute)
     {
-   
-       
-        if($this->isNewRecord){
-            $workingHours = self::find()->where(['date'=>$this->$attribute,'employee_id'=>$this->employee_id])->all();
-            if(count($workingHours)){
-                $this->addError($attribute, Yii::t('app','This employee has registered his shift on this date'));
+
+
+        if ($this->isNewRecord) {
+            $workingHours = self::find()->where(['date' => $this->$attribute, 'user_id' => $this->user_id])->all();
+            if (count($workingHours)) {
+                $this->addError($attribute, Yii::t('app', 'This employee has registered his shift on this date'));
             }
         }
-       
 
-       
+
+
     }
 
-    public function getEmployee(){
-        return $this->hasOne(Employees::className(), ['id'=>'employee_id']);
+    public function getEmployee()
+    {
+        return $this->hasOne(Employees::className(), ['id' => 'user_id']);
     }
     public function beforeSave($insert)
     {
-        $today=Carbon::now("Asia/Amman");
+        $today = Carbon::now("Asia/Amman");
         if (parent::beforeSave($insert)) {
             // Place your custom code here
             if ($this->isNewRecord) {
                 $this->created_at = $today;
                 $this->updated_at = $today;
             } else {
-                $this->updated_at =$today;
+                $this->updated_at = $today;
             }
 
             return true;

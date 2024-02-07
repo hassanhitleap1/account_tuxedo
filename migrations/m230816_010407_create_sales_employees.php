@@ -21,10 +21,10 @@ class m230816_010407_create_sales_employees extends Migration
 
         $this->createTable('{{%sales_employees}}', [
             'id' => $this->primaryKey(),
-            'amount'=>$this->double()->notNull()->defaultValue(0),
-            'tiger'=>$this->double()->notNull()->defaultValue(0),
-            'employee_id'=>$this->integer()->notNull(),
-            "payment_method"=>"enum('cash','visa')",
+            'amount' => $this->double()->notNull()->defaultValue(0),
+            'tiger' => $this->double()->notNull()->defaultValue(0),
+            'user_id' => $this->integer()->notNull(),
+            "payment_method" => "enum('cash','visa')",
             'note' => $this->text()->null(),
             'date' => $this->date()->notNull()->defaultValue(null),
             'created_at' => $this->dateTime()->notNull()->defaultValue(null),
