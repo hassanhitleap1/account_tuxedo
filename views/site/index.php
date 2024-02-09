@@ -12,6 +12,7 @@ $totalExpenses = 0;
 $totalSalesTiger = 0;
 /** @var yii\web\View $this */
 
+
 $this->title = 'tuxedo';
 ?>
 <div class="site-index">
@@ -173,13 +174,15 @@ $this->title = 'tuxedo';
                         $totalSalesTiger += (float) $salesEmployee->tiger;
 
                         ?>
+
                         <tr>
                             <th scope="row">
                                 <?= ++$key ?>
                             </th>
                             <td>
-                                <?= $salesEmployee->employee->name ?>
+                                <?= $salesEmployee->user->name ?>
                             </td>
+
                             <td>
                                 <?= $salesEmployee->amount ?>
                             </td>
@@ -231,6 +234,7 @@ $this->title = 'tuxedo';
 
     </div>
 
+
     <hr />
     <div class="row">
         <div class="col-md-12">
@@ -261,13 +265,13 @@ $this->title = 'tuxedo';
 
                         <?php
                         $totalExpenses += (float) $expense->amount;
-                        if (!is_null($expense->employee)) {
-                            if (isset($sumExpenses[$expense->employee->id])) {
-                                $sumExpenses[$expense->employee->id]['expense'] += (float) $expense->amount;
-                                $sumExpenses[$expense->employee->id]['name'] = $expense->employee->name;
+                        if (!is_null($expense->user)) {
+                            if (isset($sumExpenses[$expense->user->id])) {
+                                $sumExpenses[$expense->user->id]['expense'] += (float) $expense->amount;
+                                $sumExpenses[$expense->user->id]['name'] = $expense->user->name;
                             } else {
-                                $sumExpenses[$expense->employee->id]['expense'] = (float) $expense->amount;
-                                $sumExpenses[$expense->employee->id]['name'] = $expense->employee->name;
+                                $sumExpenses[$expense->user->id]['expense'] = (float) $expense->amount;
+                                $sumExpenses[$expense->user->id]['name'] = $expense->user->name;
                             }
                         }
 
@@ -279,7 +283,7 @@ $this->title = 'tuxedo';
                                 <?= ++$key ?>
                             </th>
                             <td>
-                                <?= is_null($expense->employee) ? $expense->name : $expense->employee->name ?>
+                                <?= is_null($expense->user) ? $expense->name : $expense->user->name ?>
                             </td>
                             <td>
                                 <?= $expense->amount ?>

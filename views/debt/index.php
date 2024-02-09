@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use Yii;
 use app\models\Debt;
 use yii\helpers\Url;
@@ -12,7 +13,7 @@ use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 
-$employees = ArrayHelper::map(Employees::find()->all(), 'id', 'name');
+$users = ArrayHelper::map(User::find()->all(), 'id', 'name');
 /** @var yii\web\View $this */
 /** @var app\models\DebtSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -57,14 +58,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $searchModel,
                     'language' => 'en',
                     'attribute' => 'user_id', // Replace with your attribute
-                    'data' => $employees,
+                    'data' => $users,
                     'options' => ['placeholder' => 'Select a state ...'],
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
                 ]),
                 'value' => function ($model) {
-                        return $model->employee->name;
+                        return $model->user->name;
                     },
             ],
             'note',

@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Carbon\Carbon;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -30,8 +31,15 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
         return static::findOne(['access_token' => $token]);
+
     }
 
+
+    public function delete()
+    {
+        $this->deleted_at = Carbon::now("Asia/Amman");
+        return $this->save(false); // Skip validation to perform soft delete
+    }
     /**
      * {@inheritdoc}
      */

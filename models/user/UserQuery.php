@@ -20,7 +20,7 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public function all($db = null)
     {
-        return parent::all($db);
+        return parent::all($db); //where(['deleted_at' => null])
     }
 
     /**
@@ -29,6 +29,6 @@ class UserQuery extends \yii\db\ActiveQuery
      */
     public function one($db = null)
     {
-        return parent::one($db);
+        return parent::one($db); //where(['deleted_at' => null])
     }
 }

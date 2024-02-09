@@ -2,13 +2,13 @@
 
 use Carbon\Carbon;
 use yii\helpers\Html;
-use app\models\Employees;
+use app\models\user\User;
 use kartik\date\DatePicker;
 use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 
-$employees = ArrayHelper::map(Employees::find()->all(), 'id', 'name');
+$users = ArrayHelper::map(User::find()->all(), 'id', 'name');
 $today = Carbon::now("Asia/Amman");
 if ($model->isNewRecord) {
     if ($today->hour < 3) {

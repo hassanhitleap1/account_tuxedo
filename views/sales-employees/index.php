@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
@@ -16,7 +17,9 @@ use kartik\daterange\DateRangePicker;
 /** @var yii\web\View $this */
 /** @var app\models\SalesEmployeesSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
-$employees = ArrayHelper::map(Employees::find()->all(), 'id', 'name');
+
+
+$users = ArrayHelper::map(User::find()->all(), 'id', 'name');
 $this->title = Yii::t('app', 'Sales Employees');
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -118,14 +121,14 @@ HTML;
                         'model' => $searchModel,
                         'language' => 'en',
                         'attribute' => 'user_id', // Replace with your attribute
-                        'data' => $employees,
+                        'data' => $users,
                         'options' => ['placeholder' => 'Select a state ...'],
                         'pluginOptions' => [
                             'allowClear' => true
                         ],
                     ]),
                     'value' => function ($model) {
-                    return $model->employee->name;
+                    return $model->user->name;
                 },
                 ],
 

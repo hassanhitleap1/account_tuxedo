@@ -8,6 +8,9 @@ use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\TypesOfExpenses;
+use app\models\user\User;
+
+$users = ArrayHelper::map(User::find()->all(), 'id', 'name');
 
 $months = [
     1 => 1,
@@ -23,8 +26,10 @@ $months = [
     11 => 11,
     12 => 12,
 ];
-$month = 9;
+
 $today = Carbon::now("Asia/Amman");
+
+$month = $today->month;
 $session = Yii::$app->session;
 if ($model->isNewRecord) {
     if ($today->hour < 3) {
@@ -44,7 +49,7 @@ if ($model->isNewRecord) {
     $month = $model->month;
 }
 
-$employees = ArrayHelper::map(Employees::find()->all(), 'id', 'name');
+
 $types = ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
 
 
@@ -75,9 +80,9 @@ $types = ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
         </div>
     </div>
     <div class="row">
-        <div class="col-4">
+        <div class="col-3">
             <?= $form->field($model, 'user_id')->widget(Select2::classname(), [
-                'data' => $employees,
+                'data' => $users,
                 'language' => 'en',
                 'options' => ['placeholder' => 'Select a state ...'],
                 'pluginOptions' => [
@@ -86,13 +91,18 @@ $types = ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
                 ],
             ]); ?>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <?= $form->field($model, 'amount')->textInput() ?>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <?= $form->field($model, 'month')->dropDownList($months, ['prompt' => 'ارجوالتحديد', 'value' => $month]); ?>
 
         </div>
+        <div class="col-3">
+            <?= $form->field($model, 'charity_account')->dropDownList([0 => "لا", 1 => "نعم"]); ?>
+
+        </div>
+
     </div>
     <div class="row">
         <div class="col-6">
@@ -106,6 +116,7 @@ $types = ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
                 ]
             ]); ?>
         </div>
+
         <div class="col-6">
             <?= $form->field($model, 'note')->textarea(['rows' => 6]) ?>
         </div>

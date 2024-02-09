@@ -77,8 +77,6 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-
-
         if (Yii::$app->user->isGuest) {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 
@@ -94,6 +92,7 @@ class SiteController extends Controller
         $date = Yii::$app->getRequest()->getQueryParam('date', $date);
 
         $sales_amount_daily = SalesEmployees::find()->where(['date(' . SalesEmployees::tableName() . '.date)' => $date])->sum('amount');
+
         $sales_amount_daily_visa = SalesEmployees::find()->where([
             'date(' . SalesEmployees::tableName() . '.date)' => $date,
             'payment_method' => 'visa'
@@ -107,8 +106,8 @@ class SiteController extends Controller
         $salesEmployees = SalesEmployees::find()->where(['date(' . SalesEmployees::tableName() . '.date)' => $date])->all();
 
 
-
         $expenses = Expenses::find()->where(['date(' . Expenses::tableName() . '.date)' => $date])->all();
+
         return $this->render('index', [
             'sales_amount_daily' => $sales_amount_daily,
             'sales_amount_daily_visa' => $sales_amount_daily_visa,

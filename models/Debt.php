@@ -70,9 +70,9 @@ class Debt extends \yii\db\ActiveRecord
         }
         return false;
     }
-    public function getEmployee()
+    public function getUser()
     {
-        return $this->hasOne(Employees::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id', 'user_id']);
     }
     /**
      * {@inheritdoc}

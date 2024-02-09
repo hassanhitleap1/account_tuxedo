@@ -8,7 +8,10 @@ use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 
-$employees = ArrayHelper::map(Employees::find()->all(), 'id', 'name');
+use app\models\user\User;
+
+$users = ArrayHelper::map(User::find()->all(), 'id', 'name');
+
 $today = Carbon::now("Asia/Amman");
 $session = Yii::$app->session;
 if ($model->isNewRecord) {
@@ -38,7 +41,7 @@ if ($model->isNewRecord) {
         </div>
         <div class="col-6">
             <?= $form->field($model, 'user_id')->widget(Select2::classname(), [
-                'data' => $employees,
+                'data' => $users,
                 'language' => 'en',
                 'options' => ['placeholder' => 'Select a state ...'],
                 'pluginOptions' => [

@@ -2,6 +2,7 @@
 
 namespace app\models\user;
 
+use Carbon\Carbon;
 use Yii;
 
 /**
@@ -25,9 +26,12 @@ use Yii;
  * @property string|null $work_end_time
  * @property int|null $created_at
  * @property int|null $updated_at
+ * @property  string|null $deleted_at
  */
 class User extends \yii\db\ActiveRecord
 {
+
+    public $password;
     /**
      * {@inheritdoc}
      */
@@ -46,7 +50,7 @@ class User extends \yii\db\ActiveRecord
             [['access_token'], 'string'],
             [['salary'], 'required'],
             [['salary', 'commission', 'round_balance'], 'number'],
-            [['start_date', 'work_start_time', 'work_end_time'], 'safe'],
+            [['start_date', 'work_start_time', 'work_end_time', 'deleted_at'], 'safe'],
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['phone', 'auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
@@ -56,6 +60,13 @@ class User extends \yii\db\ActiveRecord
         ];
     }
 
+
+    public function delete()
+    {
+        $this->deleted_at = Carbon::now("Asia/Amman");
+
+        return $this->save(false); // Skip validation to perform soft delete
+    }
     /**
      * {@inheritdoc}
      */
@@ -80,6 +91,7 @@ class User extends \yii\db\ActiveRecord
             'work_end_time' => Yii::t('app', 'Work End Time'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
+            'deleted_at' => Yii::t('app', 'Deleted At'),
         ];
     }
 
@@ -91,4 +103,6 @@ class User extends \yii\db\ActiveRecord
     {
         return new UserQuery(get_called_class());
     }
+
+
 }

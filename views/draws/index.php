@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /** @var yii\web\View $this */
 /** @var app\models\DrawsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -15,7 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="draws-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>
+        <?= Html::encode($this->title) ?>
+    </h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create Draws'), ['create'], ['class' => 'btn btn-success']) ?>
@@ -32,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'amount',
-            'employee.name',
+            'user.name',
             'note',
             'date',
             //'created_at',
@@ -40,8 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Draws $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                        return Url::toRoute([$action, 'id' => $model->id]);
+                    }
             ],
         ],
     ]); ?>

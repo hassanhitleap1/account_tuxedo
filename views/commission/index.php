@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'amount',
-            'user_id',
+            'user.name',
             'note',
             [
                 'attribute' => 'date', // Replace with your attribute

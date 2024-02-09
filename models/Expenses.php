@@ -58,6 +58,7 @@ class Expenses extends \yii\db\ActiveRecord
             'note' => Yii::t('app', 'Note'),
             'date' => Yii::t('app', 'Date'),
             'month' => Yii::t('app', 'Month'),
+            'charity_account' => Yii::t('app', 'Charity Account'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
@@ -122,9 +123,9 @@ class Expenses extends \yii\db\ActiveRecord
     }
 
 
-    public function getEmployee()
+    public function getUser()
     {
-        return $this->hasOne(Employees::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     public function getTypeOfExpense()

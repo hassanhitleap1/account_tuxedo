@@ -44,9 +44,9 @@ class Commission extends \yii\db\ActiveRecord
     }
 
 
-    public function getEemployee()
+    public function getUser()
     {
-        return $this->hasOne(Employees::className(), ['id', 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
     /**
      * {@inheritdoc}

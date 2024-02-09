@@ -24,32 +24,31 @@ class m231004_231315_users extends Migration
 
         $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
-
-
-            'username' => $this->string()->unique()->defaultValue(null),
+            'username' => $this->string()->null()->unique()->defaultValue(null),
+            'name' => $this->string(),
             'phone' => $this->string(32)->unique()->notNull()->defaultValue(null),
             'auth_key' => $this->string(32)->notNull()->defaultValue(null),
             'password_hash' => $this->string()->notNull()->defaultValue(null),
             'password_reset_token' => $this->string()->unique()->defaultValue(null),
-            'email' => $this->string()->unique()->defaultValue(null),
+            'email' => $this->string()->null()->unique()->defaultValue(null),
             'type' => $this->smallInteger()->defaultValue(1),
             'status' => $this->smallInteger()->notNull()->defaultValue(10),
             'access_token' => $this->text()->null(),
-
             'salary' => $this->double()->notNull(),
             'commission' => $this->double()->notNull()->defaultValue(0),
             'round_balance' => $this->double()->notNull()->defaultValue(0),
             'start_date' => $this->date()->null(),
             'work_start_time' => $this->time()->null(),
-
             'work_end_time' => $this->time()->null(),
             'created_at' => $this->integer()->notNull()->defaultValue(null),
             'updated_at' => $this->integer()->notNull()->defaultValue(null),
+            'deleted_at' => $this->dateTime()->null()->defaultValue(null),
         ], $tableOptions);
 
 
         $user = new User();
         $user->username = 'admin';
+        $user->name = "حسن كيوان";
         $user->phone = '0799263494';
         $user->email = 'admin@admin.com';
         $user->salary = 0;

@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
@@ -20,7 +21,7 @@ use kartik\daterange\DateRangePicker;
 
 $this->title = Yii::t('app', 'Expenses');
 $this->params['breadcrumbs'][] = $this->title;
-$employees = ArrayHelper::map(Employees::find()->all(), 'id', 'name');
+$users = ArrayHelper::map(User::find()->all(), 'id', 'name');
 $types = ArrayHelper::map(TypesOfExpenses::find()->all(), 'id', 'name');
 $date = "";
 if (isset($_GET['date_range'])) {
@@ -108,7 +109,7 @@ HTML;
                         ],
                     ]),
                     'value' => function ($model) {
-                    return $model->typeOfExpense->name;
+                    return $model->typeOfExpense->name ?? '';
                 },
                 ],
 
@@ -119,7 +120,7 @@ HTML;
                         'model' => $searchModel,
                         'language' => 'en',
                         'attribute' => 'user_id', // Replace with your attribute
-                        'data' => $employees,
+                        'data' => $users,
                         'options' => ['placeholder' => 'Select a state ...'],
                         'pluginOptions' => [
                             'allowClear' => true

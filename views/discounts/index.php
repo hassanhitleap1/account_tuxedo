@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use Yii;
 use yii\helpers\Url;
 use yii\helpers\Html;
@@ -16,7 +17,7 @@ use yii\helpers\ArrayHelper;
 /** @var app\models\DiscountsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$employees = ArrayHelper::map(Employees::find()->all(), 'id', 'name');
+$users = ArrayHelper::map(User::find()->all(), 'id', 'name');
 
 $this->title = Yii::t('app', 'Discounts');
 $this->params['breadcrumbs'][] = $this->title;
@@ -48,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $searchModel,
                     'language' => 'en',
                     'attribute' => 'user_id', // Replace with your attribute
-                    'data' => $employees,
+                    'data' => $users,
                     'options' => ['placeholder' => 'Select a state ...'],
                     'pluginOptions' => [
                         'allowClear' => true

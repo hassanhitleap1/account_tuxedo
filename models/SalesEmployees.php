@@ -2,10 +2,10 @@
 
 namespace app\models;
 
+use app\models\user\User;
 use Yii;
 use Carbon\Carbon;
-use app\models\Expenses;
-use app\components\Calculator;
+
 
 /**
  * This is the model class for table "{{%sales_employees}}".
@@ -51,7 +51,7 @@ class SalesEmployees extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'amount' => Yii::t('app', 'Amount'),
-            'user_id' => Yii::t('app', 'Employee ID'),
+            'user_id' => Yii::t('app', 'User'),
             'note' => Yii::t('app', 'Note'),
             'payment_method' => Yii::t('app', 'Payment Method'),
             'tiger' => Yii::t('app', 'Tiger'),
@@ -62,9 +62,9 @@ class SalesEmployees extends \yii\db\ActiveRecord
     }
 
 
-    public function getEmployee()
+    public function getUser()
     {
-        return $this->hasOne(Employees::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
