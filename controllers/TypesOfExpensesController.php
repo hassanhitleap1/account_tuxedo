@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\TypesOfExpenses;
 use app\models\TypesOfExpensesSearch;
+use app\models\User;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -24,7 +26,7 @@ class TypesOfExpensesController extends Controller
         }
         parent::init();
     }
-    
+
     /**
      * @inheritDoc
      */
