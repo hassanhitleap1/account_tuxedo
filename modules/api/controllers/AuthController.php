@@ -8,14 +8,10 @@ use Yii;
 
 use yii\rest\Controller;
 use yii\web\MethodNotAllowedHttpException;
-use yii\web\UnauthorizedHttpException;
-use yii\web\Response;
-use yii\helpers\Security;
-
 
 class AuthController extends Controller
 {
-
+    use \app\modules\api\Response;
 
     public function behaviors()
     {
@@ -23,7 +19,7 @@ class AuthController extends Controller
         $behaviors['bootstrap'] = [
             'class' => \yii\filters\ContentNegotiator::className(),
             'formats' => [
-                'application/json' => Response::FORMAT_JSON,
+                'application/json' => \yii\web\Response::FORMAT_JSON,
             ],
         ];
 
@@ -41,12 +37,14 @@ class AuthController extends Controller
                 $user = User::findOne(Yii::$app->user->identity->id);
                 $user->access_token = \Yii::$app->security->generateRandomString();
                 $user->save();
-                return ["success" => true, "data" => $user];
+                return $this->sendResponse($user);
             } else {
-                return ["success" => false, 'errors' => $model->getErrors()];
+                $errors = $model->getErrors();
+                return $this->errorResponse($errors[0], $model->getErrors());
             }
         } else {
-            throw new MethodNotAllowedHttpException('Method Not Allowed');
+            return $this->errorResponse("Method Not Allowed");
+
         }
 
 

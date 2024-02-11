@@ -28,8 +28,10 @@ class BaseController extends Controller
             $accessToken = $matches[1];
             $this->user = User::findIdentityByAccessToken($accessToken);
         } else {
-            throw new UnauthorizedHttpException("Unauthorized");
+            return $this->errorResponse("Method Not Allowed");
+
         }
+
         return $behaviors;
 
 

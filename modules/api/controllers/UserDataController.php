@@ -152,36 +152,31 @@ class UserDataController extends BaseController
 
         if ($this->request->isPost) {
 
-
             $workingHoursModel = WorkingHours::find()->where(['emappley_id' => $this->user->id])->where(['date' => Carbon::now("Asia/Amman")->toDateString()])->one();
             if (is_null($workingHoursModel)) {
                 $workingHours = new WorkingHours();
-
                 $workingHours->start_time = Carbon::now("Asia/Amman")->toDateString();
                 $workingHours->date = Carbon::now("Asia/Amman")->toDateString();
-
                 $workingHours->user_id = $this->user->id;
-
                 if ($workingHours->save(false)) {
-                    return $this->sendResponse([]);
+                    return $this->sendResponse($workingHours);
                 } else {
                     $workingHoursModel->start_time = Carbon::now("Asia/Amman")->toDateString();
                     if ($workingHoursModel->save(false)) {
-                        return $this->sendResponse([]);
+                        return $this->sendResponse($workingHours);
                     }
-                    return $this->errorResponse();
-                    return ["mess" => "error", "error" => $workingHours->getErrors()]; // Created
+                    $errors = $workingHours->getErrors();
+                    return $this->errorResponse($errors[0], $errors);
 
                 }
             } else {
-                return $this->errorResponse();
-                return ["mess" => "error", "error" => "الموظف سجل الدخول"];
+                return $this->errorResponse("الموظف سجل الدخول");
+
             }
 
 
         }
-        return $this->errorResponse();
-        return ["mess" => "error", "errors" => "not send post"];
+        return $this->errorResponse("method not allow");
 
     }
 
@@ -202,24 +197,25 @@ class UserDataController extends BaseController
                 $workingHours->user_id = $this->user->id;
 
                 if ($workingHours->save(false)) {
-                    return $this->sendResponse([]);
+                    return $this->sendResponse($workingHoursModel);
                 } else {
                     $workingHoursModel->end_time = Carbon::now("Asia/Amman")->toDateString();
                     if ($workingHoursModel->save(false)) {
-                        return $this->sendResponse([]);
+                        return $this->sendResponse($workingHoursModel);
                     }
-                    return $this->sendResponse([]);
-                    return ["mess" => "error", "error" => $workingHours->getErrors()]; // Created
+
+                    $errors = $workingHours->getErrors();
+                    return $this->errorResponse($errors[0], $errors);
 
                 }
             } else {
-                return $this->errorResponse();
-                return ["mess" => "error", "error" => "الموظف سجل الدخول"];
+                return $this->errorResponse("الموظف سجل الدخول");
+
             }
 
         }
-        return $this->errorResponse();
-        return ["mess" => "error", "errors" => "not send post"];
+        return $this->errorResponse("method not allow");
+
 
 
 
