@@ -94,7 +94,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                '( ' . Yii::t('app', 'Logout') . ' ' . Yii::$app->user->identity->username . ')',
+                '( ' . Yii::t('app', 'Logout') . ' ' . Yii::$app->user->identity->name . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

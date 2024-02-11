@@ -51,12 +51,11 @@ class User extends \yii\db\ActiveRecord
             [['salary'], 'required'],
             [['salary', 'commission', 'round_balance'], 'number'],
             [['start_date', 'work_start_time', 'work_end_time', 'deleted_at'], 'safe'],
-            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['password_hash', 'password_reset_token'], 'string', 'max' => 255],
             [['phone', 'auth_key'], 'string', 'max' => 32],
-            [['username'], 'unique'],
             [['phone'], 'unique'],
             [['password_reset_token'], 'unique'],
-            [['email'], 'unique'],
+
         ];
     }
 
@@ -74,12 +73,10 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'username' => Yii::t('app', 'Username'),
             'phone' => Yii::t('app', 'Phone'),
             'auth_key' => Yii::t('app', 'Auth Key'),
             'password_hash' => Yii::t('app', 'Password Hash'),
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),
-            'email' => Yii::t('app', 'Email'),
             'type' => Yii::t('app', 'Type'),
             'status' => Yii::t('app', 'Status'),
             'access_token' => Yii::t('app', 'Access Token'),

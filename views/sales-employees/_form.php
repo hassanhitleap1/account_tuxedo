@@ -15,12 +15,13 @@ $users = ArrayHelper::map(User::find()->all(), 'id', 'name');
 $today = Carbon::now("Asia/Amman");
 $session = Yii::$app->session;
 if ($model->isNewRecord) {
-    if ($today->hour < 3) {
-        $date = $today->subDay()->toDateString();
-    } elseif ($session->has('date')) {
+
+    if ($session->has('date')) {
         $dateCarbon = Carbon::parse($session->get('date'));
         $date = $dateCarbon->toDateString();
         $session->remove('date');
+    } elseif ($today->hour < 3) {
+        $date = $today->subDay()->toDateString();
     } else {
         $date = $today->toDateString();
     }
