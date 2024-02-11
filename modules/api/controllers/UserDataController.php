@@ -143,7 +143,7 @@ class UserDataController extends BaseController
         }
 
 
-        return ['data' => $data];
+        return $this->sendResponse($data);
     }
 
 
@@ -163,20 +163,24 @@ class UserDataController extends BaseController
                 $workingHours->user_id = $this->user->id;
 
                 if ($workingHours->save(false)) {
-                    return ["mess" => "success"]; // Created
+                    return $this->sendResponse([]);
                 } else {
                     $workingHoursModel->start_time = Carbon::now("Asia/Amman")->toDateString();
                     if ($workingHoursModel->save(false)) {
-                        return ["mess" => "success"]; // Created  
+                        return $this->sendResponse([]);
                     }
+                    return $this->errorResponse();
                     return ["mess" => "error", "error" => $workingHours->getErrors()]; // Created
 
                 }
             } else {
+                return $this->errorResponse();
                 return ["mess" => "error", "error" => "الموظف سجل الدخول"];
             }
 
+
         }
+        return $this->errorResponse();
         return ["mess" => "error", "errors" => "not send post"];
 
     }
@@ -198,20 +202,23 @@ class UserDataController extends BaseController
                 $workingHours->user_id = $this->user->id;
 
                 if ($workingHours->save(false)) {
-                    return ["mess" => "success"]; // Created
+                    return $this->sendResponse([]);
                 } else {
                     $workingHoursModel->end_time = Carbon::now("Asia/Amman")->toDateString();
                     if ($workingHoursModel->save(false)) {
-                        return ["mess" => "success"]; // Created  
+                        return $this->sendResponse([]);
                     }
+                    return $this->sendResponse([]);
                     return ["mess" => "error", "error" => $workingHours->getErrors()]; // Created
 
                 }
             } else {
+                return $this->errorResponse();
                 return ["mess" => "error", "error" => "الموظف سجل الدخول"];
             }
 
         }
+        return $this->errorResponse();
         return ["mess" => "error", "errors" => "not send post"];
 
 

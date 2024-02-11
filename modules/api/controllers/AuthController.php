@@ -41,9 +41,9 @@ class AuthController extends Controller
                 $user = User::findOne(Yii::$app->user->identity->id);
                 $user->access_token = \Yii::$app->security->generateRandomString();
                 $user->save();
-                return ["data" => $user];
+                return ["success" => true, "data" => $user];
             } else {
-                return ['errors' => $model->getErrors()];
+                return ["success" => false, 'errors' => $model->getErrors()];
             }
         } else {
             throw new MethodNotAllowedHttpException('Method Not Allowed');
@@ -52,8 +52,8 @@ class AuthController extends Controller
 
     }
 
- 
 
- 
+
+
 }
 

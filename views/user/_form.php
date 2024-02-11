@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -30,7 +31,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'password')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-6">
-            <?= $form->field($model, 'type')->textInput() ?>
+            <?= $form->field($model, 'type')->dropDownList([User::USER => 'USER', User::SUPER_ADMIN => 'SUPER ADMIN']) ?>
         </div>
     </div>
 

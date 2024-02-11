@@ -4,6 +4,7 @@ namespace app\modules\api\controllers;
 
 
 use app\models\User;
+use app\modules\api\Response;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBasicAuth;
 use yii\filters\auth\HttpBearerAuth;
@@ -15,6 +16,7 @@ use yii\web\UnauthorizedHttpException;
 class BaseController extends Controller
 {
 
+    use Response;
     public $user = null;
     public function behaviors()
     {
