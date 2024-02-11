@@ -61,6 +61,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 ['label' => Yii::t('app', 'Users'), 'url' => ['/user/index']],
 
                 // ['label' => Yii::t('app', 'Employees'), 'url' => ['/employees/index']],
+                ['label' => Yii::t('app', 'Bonus'), 'url' => ['/bonus/index']],
                 ['label' => Yii::t('app', 'Draws'), 'url' => ['/draws/index']],
                 ['label' => Yii::t('app', 'Debts'), 'url' => ['/debt/index']],
                 ['label' => Yii::t('app', 'Commissions'), 'url' => ['/commission/index']],

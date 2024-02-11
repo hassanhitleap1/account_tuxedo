@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\Calculation;
 use Carbon\Carbon;
 use Yii;
 use app\models\Tiger;
@@ -158,50 +159,11 @@ class SalesEmployeesController extends Controller
     public function actionCalculation()
     {
 
-
         if ($this->request->isPost) {
             $data = $this->request->post();
             $date = Carbon::parse($data['date']);
-            $amount = Carbon::parse($data['value']);
-
-            $salesEmployees = SalesEmployees::find()->where(['date' => $date->toDateString()])->orderBy('amount', SORT_DESC)->all();
-
-            if (count($salesEmployees)) {
-                foreach ($salesEmployees as $salesEmployee) {
-                    if ($salesEmployee->amount >= $amount) {
-                        $newAmount = $salesEmployee->amount - $amount;
-                        if ($newAmount == 0) {
-                            $salesEmployee->payment_method = 'visa';
-                            $salesEmployee->save();
-                            return $this->asJson(["success" => 1]);
-                        } else {
-                            $model = new SalesEmployees();
-                            $model->user_id = $salesEmployee->user_id;
-                            $model->tiger = 0;
-                            $model->payment_method = "visa";
-                            $model->date = $date;
-                            $model->amount = $amount;
-                            $model->save();
-                            $salesEmployee->amount = $newAmount;
-                            $salesEmployee->save();
-                            return $this->asJson(["success" => 1]);
-
-                        }
-
-                    } else {
-                        $newAmount = $amount - $salesEmployee->amount;
-                        if ($newAmount < 0) {
-
-                        } elseif ($newAmount == 0) {
-
-                        } else {
-
-                        }
-                    }
-                }
-
-            }
-
+            $amount = (int) $data['value'];
+            Calculation::set($date, $amount);
             return $this->asJson(["success" => 1]);
 
         }

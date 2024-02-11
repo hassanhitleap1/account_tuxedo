@@ -2,31 +2,28 @@
 
 namespace app\models;
 
-use app\components\Calculator;
-use Yii;
 use Carbon\Carbon;
-use app\models\Employees;
+use Yii;
 
 /**
- * This is the model class for table "commission".
+ * This is the model class for table "{{%bonus}}".
  *
  * @property int $id
  * @property float $amount
  * @property int $user_id
  * @property string|null $note
- * @property string|null $date
+ * @property string $date
  * @property string|null $created_at
  * @property string|null $updated_at
  */
-class Commission extends \yii\db\ActiveRecord
+class Bonus extends \yii\db\ActiveRecord
 {
-    const TYPE_EXPENSES = 2;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'commission';
+        return '{{%bonus}}';
     }
 
     /**
@@ -36,18 +33,13 @@ class Commission extends \yii\db\ActiveRecord
     {
         return [
             [['amount'], 'number'],
-            [['user_id'], 'required'],
+            [['user_id', 'date'], 'required'],
             [['user_id'], 'integer'],
+            [['note'], 'string'],
             [['date', 'created_at', 'updated_at'], 'safe'],
-            [['note'], 'string', 'max' => 255],
         ];
     }
 
-
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
     /**
      * {@inheritdoc}
      */
@@ -56,7 +48,7 @@ class Commission extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'amount' => Yii::t('app', 'Amount'),
-            'user_id' => Yii::t('app', 'Employee ID'),
+            'user_id' => Yii::t('app', 'User ID'),
             'note' => Yii::t('app', 'Note'),
             'date' => Yii::t('app', 'Date'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -64,35 +56,20 @@ class Commission extends \yii\db\ActiveRecord
         ];
     }
 
-
-
     /**
      * {@inheritdoc}
-     * @return CommissionQuery the active query used by this AR class.
+     * @return BonusQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new CommissionQuery(get_called_class());
+        return new BonusQuery(get_called_class());
     }
 
 
-
-    public function beforeDelete()
+    public function getUser()
     {
-        return parent::beforeDelete();
+        return $this->hasOne(User::className(), ['id', 'user_id']);
     }
-
-
-    public function beforeValidate()
-    {
-        if (parent::beforeValidate()) {
-            // $this->amount=trim($this->amount);
-            // $this->amount= Calculator::faTOen($this->amount);
-            return true;
-        }
-        return false;
-    }
-
 
     public function beforeSave($insert)
     {
@@ -111,10 +88,5 @@ class Commission extends \yii\db\ActiveRecord
         } else {
             return false;
         }
-    }
-
-    public function afterSave($insert, $changedAttributes)
-    {
-        parent::afterSave($insert, $changedAttributes);
     }
 }

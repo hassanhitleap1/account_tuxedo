@@ -2,32 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\User;
-use Yii;
+use app\models\Bonus;
+use app\models\BonusSearch;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use app\models\WorkingHours;
-use app\models\WorkingHoursSearch;
 use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
 /**
- * WorkingHoursController implements the CRUD actions for WorkingHours model.
+ * BonusController implements the CRUD actions for Bonus model.
  */
-class WorkingHoursController extends Controller
+class BonusController extends Controller
 {
-
-
-    public function init()
-    {
-        if (!Yii::$app->user->isGuest) {
-            if (Yii::$app->user->identity->type != User::SUPER_ADMIN) {
-                throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-            }
-        }
-        parent::init();
-    }
-
-
     /**
      * @inheritDoc
      */
@@ -47,13 +32,13 @@ class WorkingHoursController extends Controller
     }
 
     /**
-     * Lists all WorkingHours models.
+     * Lists all Bonus models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new WorkingHoursSearch();
+        $searchModel = new BonusSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -63,7 +48,7 @@ class WorkingHoursController extends Controller
     }
 
     /**
-     * Displays a single WorkingHours model.
+     * Displays a single Bonus model.
      * @param int $id رقم 
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -76,28 +61,17 @@ class WorkingHoursController extends Controller
     }
 
     /**
-     * Creates a new WorkingHours model.
+     * Creates a new Bonus model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new WorkingHours();
+        $model = new Bonus();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-
-                $session = Yii::$app->session;
-                $name = $model->employee->name ?? "";
-                $session->set('message', Yii::t('app', 'workingHours', [
-                    $name,
-                    $model->start_time,
-                    $model->end_time,
-                    $model->date
-                ]));
-                return $this->redirect(['working-hours/create']);
-
-                // return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -109,7 +83,7 @@ class WorkingHoursController extends Controller
     }
 
     /**
-     * Updates an existing WorkingHours model.
+     * Updates an existing Bonus model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id رقم 
      * @return string|\yii\web\Response
@@ -129,7 +103,7 @@ class WorkingHoursController extends Controller
     }
 
     /**
-     * Deletes an existing WorkingHours model.
+     * Deletes an existing Bonus model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id رقم 
      * @return \yii\web\Response
@@ -143,33 +117,18 @@ class WorkingHoursController extends Controller
     }
 
     /**
-     * Finds the WorkingHours model based on its primary key value.
+     * Finds the Bonus model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id رقم 
-     * @return WorkingHours the loaded model
+     * @return Bonus the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = WorkingHours::findOne(['id' => $id])) !== null) {
+        if (($model = Bonus::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-
-
-
-    public function actionEnter()
-    {
-
-        $command = "ipconfig getifaddr en0";
-        $localSSID = exec($command);
-        echo $localSSID;
-        $command = "ipconfig getifaddr en0";
-        $localSSID = exec($command);
-        echo $localSSID;
-        exit;
-
     }
 }

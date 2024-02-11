@@ -150,24 +150,24 @@ class SiteController extends Controller
 
 
 
-        $employees = Employees::find()->asArray()->all();
+        $users = User::find()->asArray()->all();
 
 
 
-        foreach ($employees as $key => $employee) {
+        foreach ($users as $key => $user) {
 
-            $employees[$key]['amount_debt'] = Expenses::find()->where(['month(expenses.date)' => $month, 'user_id' => $employee['id'], 'year(expenses.date)' => $year, 'type_id' => Debt::TYPE_EXPENSES])->sum('amount') ?? 0;
+            $users[$key]['amount_debt'] = Expenses::find()->where(['month(expenses.date)' => $month, 'user_id' => $user['id'], 'year(expenses.date)' => $year, 'type_id' => Debt::TYPE_EXPENSES])->sum('amount') ?? 0;
 
-            $employees[$key]['amount_commission'] = Expenses::find()->where(['month(expenses.date)' => $month, 'user_id' => $employee['id'], 'year(expenses.date)' => $year, 'type_id' => Commission::TYPE_EXPENSES])->sum('amount') ?? 0;
+            $users[$key]['amount_commission'] = Expenses::find()->where(['month(expenses.date)' => $month, 'user_id' => $user['id'], 'year(expenses.date)' => $year, 'type_id' => Commission::TYPE_EXPENSES])->sum('amount') ?? 0;
 
-            $employees[$key]['amount_draws'] = Expenses::find()->where(['month(expenses.date)' => $month, 'user_id' => $employee['id'], 'year(expenses.date)' => $year, 'type_id' => Draws::TYPE_EXPENSES])->sum('amount') ?? 0;
+            $users[$key]['amount_draws'] = Expenses::find()->where(['month(expenses.date)' => $month, 'user_id' => $user['id'], 'year(expenses.date)' => $year, 'type_id' => Draws::TYPE_EXPENSES])->sum('amount') ?? 0;
 
 
-            $employees[$key]['amount_sales_employees'] = SalesEmployees::find()->where(['month(date)' => $month, 'user_id' => $employee['id'], 'year(date)' => $year])->sum('amount') ?? 0;
+            $users[$key]['amount_sales_employees'] = SalesEmployees::find()->where(['month(date)' => $month, 'user_id' => $user['id'], 'year(date)' => $year])->sum('amount') ?? 0;
 
-            $employees[$key]['amount_tiger'] = SalesEmployees::find()->where(['month(date)' => $month, 'user_id' => $employee['id'], 'year(date)' => $year])->sum('tiger') ?? 0;
+            $users[$key]['amount_tiger'] = SalesEmployees::find()->where(['month(date)' => $month, 'user_id' => $user['id'], 'year(date)' => $year])->sum('tiger') ?? 0;
 
-            $employees[$key]['amount_discount'] = Discounts::find()->where(['month(date)' => $month, 'user_id' => $employee['id'], 'year(date)' => $year])->sum('amount') ?? 0;
+            $users[$key]['amount_discount'] = Discounts::find()->where(['month(date)' => $month, 'user_id' => $user['id'], 'year(date)' => $year])->sum('amount') ?? 0;
 
 
         }
@@ -175,19 +175,19 @@ class SiteController extends Controller
 
 
         $firstDateOfMonth = date('Y-m-01');
-        foreach ($employees as $key => $employee) {
+        foreach ($users as $key => $user) {
 
-            if ($employee['start_date'] > $firstDateOfMonth) {
-                Carbon::parse($employee['start_date'])->day;
-                $dayOfEmployee = $day - Carbon::parse($employee['start_date'])->day;
-                $employees[$key]['available_debt'] = ((float) $employee['salary'] / 30) * $dayOfEmployee - ((float) $employee['amount_debt'] + (float) $employee['amount_draws'] + $employee['amount_discount']);
+            if ($user['start_date'] > $firstDateOfMonth) {
+                Carbon::parse($user['start_date'])->day;
+                $dayOfEmployee = $day - Carbon::parse($user['start_date'])->day;
+                $users[$key]['available_debt'] = ((float) $user['salary'] / 30) * $dayOfEmployee - ((float) $user['amount_debt'] + (float) $user['amount_draws'] + $user['amount_discount']);
             } else {
-                $employees[$key]['available_debt'] = ((float) $employee['salary'] / 30) * $day - ((float) $employee['amount_debt'] + (float) $employee['amount_draws'] + $employee['amount_discount']);
+                $users[$key]['available_debt'] = ((float) $user['salary'] / 30) * $day - ((float) $user['amount_debt'] + (float) $user['amount_draws'] + $user['amount_discount']);
             }
 
         }
 
-        return $this->render('monthy', ['employees' => $employees, 'sales_amount_monthly' => $sales_amount_monthly, 'month' => $month, 'expenses_amount_monthly' => $expenses_amount_monthly, 'sales_amount_monthly_visa' => $sales_amount_monthly_visa, 'sales_amount_monthly_cash' => $sales_amount_monthly_cash]);
+        return $this->render('monthy', ['users' => $users, 'sales_amount_monthly' => $sales_amount_monthly, 'month' => $month, 'expenses_amount_monthly' => $expenses_amount_monthly, 'sales_amount_monthly_visa' => $sales_amount_monthly_visa, 'sales_amount_monthly_cash' => $sales_amount_monthly_cash]);
     }
 
     /**
@@ -217,10 +217,12 @@ class SiteController extends Controller
     public function actionEmployeeDetails($id)
     {
 
-        if (!Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest) {
+
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
-        if (Yii::$app->user->identity->type != User::USER) {
+        if (Yii::$app->user->identity->type != User::SUPER_ADMIN) {
+
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
 
@@ -233,7 +235,7 @@ class SiteController extends Controller
         $datesInAugust = range(1, $daysInMonth);
 
 
-        $model = Employees::findOne($id);
+        $model = User::findOne($id);
         $workingHours = WorkingHours::find()->where(['month(' . WorkingHours::tableName() . '.date)' => $month])->all();
 
 
