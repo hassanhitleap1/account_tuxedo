@@ -81,6 +81,11 @@ class SiteController extends Controller
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
 
         }
+
+        if (Yii::$app->user->identity->type == User::USER) {
+            return $this->redirect(['site/employee-details', 'id' => Yii::$app->user->identity->id]);
+        }
+
         if (Yii::$app->user->identity->type != User::SUPER_ADMIN) {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }

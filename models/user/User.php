@@ -48,7 +48,7 @@ class User extends \yii\db\ActiveRecord
         return [
             [['type', 'status', 'created_at', 'updated_at'], 'integer'],
             [['access_token'], 'string'],
-            [['salary'], 'required'],
+            [['salary', 'name'], 'required'],
             [['salary', 'commission', 'round_balance'], 'number'],
             [['start_date', 'work_start_time', 'work_end_time', 'deleted_at'], 'safe'],
             [['password_hash', 'password_reset_token'], 'string', 'max' => 255],

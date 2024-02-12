@@ -29,8 +29,9 @@ use yii\widgets\ActiveForm;
 
     <div class="row">
         <div class="col-6">
-            <?= $form->field($model, 'type')->dropDownList([User::USER => 'USER', User::SUPER_ADMIN => 'SUPER ADMIN']) ?>
+            <?= $form->field($model, 'name')->textInput() ?>
         </div>
+
         <div class="col-6">
             <?= $form->field($model, 'salary')->textInput() ?>
         </div>
@@ -61,8 +62,10 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="row">
-
-        <div class="col-12">
+        <div class="col-6">
+            <?= $form->field($model, 'type')->dropDownList([User::USER => 'USER', User::SUPER_ADMIN => 'SUPER ADMIN']) ?>
+        </div>
+        <div class="col-6">
             <?= $form->field($model, 'start_date')->widget(DatePicker::classname(), [
                 'options' => ['placeholder' => 'Enter  date ...'],
                 'language' => 'en',
